@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profil — Online Shop</title>
+  <link rel="stylesheet" href="../shared.css" />
+</head>
+<body>
+
+  <div class="mockup-bar">
+    <div><a href="index.html">&larr; Toate paginile</a></div>
+    <div class="mockup-route">/account/profile</div>
+    <div><a href="account-orders.html">Comenzi</a> | <a href="account-addresses.html">Adrese</a></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="products.html" class="navbar-brand"><div class="brand-icon">S</div> OnlineShop</a>
+      <ul class="navbar-links">
+        <li><a href="products.html">Produse</a></li>
+        <li><a href="cart.html">Cos</a></li>
+        <li><a href="account-orders.html" class="active">Comenzile mele</a></li>
+      </ul>
+      <div class="navbar-actions">
+        <div class="user-menu"><div class="user-avatar">AP</div> Andrei P.</div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="section" style="padding-bottom: 0;">
+      <div class="section-title">Contul meu</div>
+      <div class="section-subtitle">Gestioneaza contul si comenzile tale</div>
+    </div>
+
+    <div class="account-layout">
+      <div class="account-sidebar">
+        <a href="account-orders.html">&#128230; Comenzile mele</a>
+        <a href="account-profile.html" class="active">&#9786; Profil</a>
+        <a href="account-addresses.html">&#127968; Adrese</a>
+        <a href="#" id="logout-link">&#10140; Deconectare</a>
+      </div>
+
+      <div class="account-card">
+        <div class="account-card-header">
+          <h2>Profilul meu</h2>
+          <button class="btn btn-sm btn-primary" id="save-profile">Salveaza</button>
+        </div>
+        <div class="account-card-body">
+          <form id="profile-form" novalidate>
+            <div class="profile-grid">
+              <div class="form-group"><label class="form-label" for="pf-name">Nume Complet</label><input id="pf-name" class="form-input" type="text" value="Andrei Popescu" required /></div>
+              <div class="form-group"><label class="form-label" for="pf-email">Email</label><input id="pf-email" class="form-input" type="email" value="andrei.popescu@email.ro" required /></div>
+              <div class="form-group"><label class="form-label" for="pf-phone">Telefon</label><input id="pf-phone" class="form-input" type="tel" value="0722 111 222" required /></div>
+              <div class="form-group"><label class="form-label" for="pf-country">Tara</label><select id="pf-country" class="form-select"><option selected>Romania</option><option>Germania</option><option>Franta</option></select></div>
+              <div class="full-width" style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border);">
+                <h3 style="font-size: 15px; margin-bottom: 16px;">Schimba parola</h3>
+                <div class="profile-grid">
+                  <div class="form-group">
+                    <label class="form-label" for="pf-pass-old">Parola actuala</label>
+                    <div class="password-toggle">
+                      <input id="pf-pass-old" class="form-input" type="password" placeholder="Parola curenta" autocomplete="current-password" />
+                      <button type="button" data-toggle-password="pf-pass-old" aria-label="Arata parola">👁</button>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="pf-pass-new">Parola noua</label>
+                    <div class="password-toggle">
+                      <input id="pf-pass-new" class="form-input" type="password" placeholder="Parola noua" autocomplete="new-password" />
+                      <button type="button" data-toggle-password="pf-pass-new" aria-label="Arata parola">👁</button>
+                    </div>
+                    <div class="password-meter"><span></span><span></span><span></span><span></span></div>
+                    <div class="password-meter-label"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer"><div class="footer-inner"><span>2026 OnlineShop</span><ul class="footer-links"><li><a href="#">Termeni</a></li></ul></div></footer>
+
+  <script src="../shared.js"></script>
+  <script>
+    wirePasswordMeter("#pf-pass-new", ".password-meter");
+
+    const btn = document.getElementById("save-profile");
+    btn.addEventListener("click", () => {
+      btn.classList.add("is-loading");
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.classList.remove("is-loading");
+        btn.disabled = false;
+        showToast({ type: "success", title: "Profil salvat", message: "Modificarile au fost salvate cu succes." });
+      }, 700);
+    });
+
+    // Track unsaved changes -> warn before logout
+    let dirty = false;
+    document.querySelectorAll("#profile-form input, #profile-form select").forEach((el) => {
+      el.addEventListener("input", () => { dirty = true; });
+    });
+
+    document.getElementById("logout-link").addEventListener("click", async (e) => {
+      e.preventDefault();
+      if (dirty) {
+        const ok = await confirmDialog({
+          title: "Modificari nesalvate",
+          message: "Ai modificari nesalvate in profil. Esti sigur ca vrei sa pleci?",
+          confirmText: "Pleaca",
+          danger: true
+        });
+        if (!ok) return;
+      }
+      window.location.href = "login.html";
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Comenzile mele — Online Shop</title>
+  <link rel="stylesheet" href="../shared.css" />
+</head>
+<body>
+
+  <div class="mockup-bar">
+    <div><a href="index.html">&larr; Toate paginile</a></div>
+    <div class="mockup-route">/account/orders</div>
+    <div><a href="account-profile.html">Profil</a> | <a href="account-addresses.html">Adrese</a></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="products.html" class="navbar-brand"><div class="brand-icon">S</div> OnlineShop</a>
+      <ul class="navbar-links">
+        <li><a href="products.html">Produse</a></li>
+        <li><a href="cart.html">Cos</a></li>
+        <li><a href="account-orders.html" class="active">Comenzile mele</a></li>
+      </ul>
+      <div class="navbar-actions">
+        <a href="cart.html" class="cart-btn">&#128722; Cos <span class="cart-badge">3</span></a>
+        <div class="user-menu"><div class="user-avatar">AP</div> Andrei P.</div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="section" style="padding-bottom: 0;">
+      <div class="section-title">Contul meu</div>
+      <div class="section-subtitle">Gestioneaza contul si comenzile tale</div>
+    </div>
+
+    <div class="account-layout">
+      <div class="account-sidebar">
+        <a href="account-orders.html" class="active">&#128230; Comenzile mele</a>
+        <a href="account-profile.html">&#9786; Profil</a>
+        <a href="account-addresses.html">&#127968; Adrese</a>
+        <a href="#" id="logout-link">&#10140; Deconectare</a>
+      </div>
+
+      <div class="account-card">
+        <div class="account-card-header">
+          <h2>Comenzile mele</h2>
+          <select id="status-filter" class="form-select" style="width: auto; padding: 6px 12px; font-size: 13px;">
+            <option value="">Toate</option>
+            <option value="Processing">Processing</option>
+            <option value="Shipped">Shipped</option>
+            <option value="Delivered">Delivered</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
+        <div class="account-card-body">
+
+          <!-- Empty state for new customer (toggle to preview) -->
+          <div id="orders-empty" class="empty-state" style="display: none; padding: 40px 24px;">
+            <div class="empty-state-icon">&#128230;</div>
+            <h2>Nu ai comenzi inca</h2>
+            <p>Cand vei plasa o comanda, o vei vedea aici. Incepe prin a explora catalogul nostru de produse.</p>
+            <a href="products.html" class="btn btn-primary">Vezi produsele</a>
+          </div>
+
+          <!-- No results for filter -->
+          <div id="orders-no-match" class="empty-state" style="display: none; padding: 40px 24px;">
+            <div class="empty-state-icon">&#128269;</div>
+            <h2>Nicio comanda gasita</h2>
+            <p>Nu ai comenzi cu acest status. Schimba filtrul pentru a vedea alte comenzi.</p>
+            <button class="btn btn-outline" onclick="document.getElementById('status-filter').value=''; document.getElementById('status-filter').dispatchEvent(new Event('change'));">Vezi toate</button>
+          </div>
+
+          <div id="orders-list">
+            <div class="order-row" data-status="Processing"><span class="order-id">#1007</span><span class="order-date">23.04.2026</span><span class="badge badge-warning">Processing</span><span class="order-items-count">4 produse</span><span class="order-amount">5,827 RON</span><button class="btn btn-sm btn-outline">Detalii</button></div>
+            <div class="order-row" data-status="Processing"><span class="order-id">#1005</span><span class="order-date">07.04.2024</span><span class="badge badge-warning">Processing</span><span class="order-items-count">4 produse</span><span class="order-amount">947 RON</span><button class="btn btn-sm btn-outline">Detalii</button></div>
+            <div class="order-row" data-status="Delivered"><span class="order-id">#1001</span><span class="order-date">01.04.2024</span><span class="badge badge-success">Delivered</span><span class="order-items-count">3 produse</span><span class="order-amount">4,748 RON</span><button class="btn btn-sm btn-outline">Detalii</button></div>
+            <div class="order-row" data-status="Delivered"><span class="order-id">#985</span><span class="order-date">15.03.2024</span><span class="badge badge-success">Delivered</span><span class="order-items-count">1 produs</span><span class="order-amount">349 RON</span><button class="btn btn-sm btn-outline">Detalii</button></div>
+            <div class="order-row" data-status="Delivered"><span class="order-id">#962</span><span class="order-date">28.02.2024</span><span class="badge badge-success">Delivered</span><span class="order-items-count">2 produse</span><span class="order-amount">688 RON</span><button class="btn btn-sm btn-outline">Detalii</button></div>
+            <div class="order-row" data-status="Cancelled"><span class="order-id">#940</span><span class="order-date">10.02.2024</span><span class="badge badge-danger">Cancelled</span><span class="order-items-count">1 produs</span><span class="order-amount">149 RON</span><button class="btn btn-sm btn-outline">Detalii</button></div>
+            <div class="order-row" data-status="Delivered"><span class="order-id">#918</span><span class="order-date">22.01.2024</span><span class="badge badge-success">Delivered</span><span class="order-items-count">3 produse</span><span class="order-amount">1,267 RON</span><button class="btn btn-sm btn-outline">Detalii</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer"><div class="footer-inner"><span>2026 OnlineShop</span><ul class="footer-links"><li><a href="#">Termeni</a></li></ul></div></footer>
+
+  <script src="../shared.js"></script>
+  <script>
+    // Status filter
+    const filter = document.getElementById("status-filter");
+    const rows = Array.from(document.querySelectorAll(".order-row"));
+    const noMatch = document.getElementById("orders-no-match");
+    const listEl = document.getElementById("orders-list");
+    filter.addEventListener("change", () => {
+      const value = filter.value;
+      let visible = 0;
+      rows.forEach((r) => {
+        const show = !value || r.dataset.status === value;
+        r.style.display = show ? "" : "none";
+        if (show) visible++;
+      });
+      noMatch.style.display = visible === 0 ? "block" : "none";
+      listEl.style.display = visible === 0 ? "none" : "";
+    });
+
+    // Logout confirm
+    document.getElementById("logout-link").addEventListener("click", async (e) => {
+      e.preventDefault();
+      const ok = await confirmDialog({
+        title: "Deconectare",
+        message: "Esti sigur ca vrei sa te deconectezi?",
+        confirmText: "Deconecteaza-ma"
+      });
+      if (ok) {
+        showToast({ type: "info", title: "Te-ai deconectat", duration: 1500 });
+        setTimeout(() => { window.location.href = "login.html"; }, 800);
+      }
+    });
+
+    // Detail buttons (placeholder)
+    document.querySelectorAll(".order-row .btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const id = btn.closest(".order-row").querySelector(".order-id").textContent;
+        showToast({ type: "info", title: "Detalii comanda " + id, message: "Aceasta ar deschide pagina de detalii a comenzii.", duration: 2500 });
+      });
+    });
+  </script>
+
+</body>
+</html>

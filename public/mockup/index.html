@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Online Shop — Admin Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+
+    <!-- ═══════════ TOP BAR ═══════════ -->
+    <header class="topbar">
+      <div class="topbar-brand">
+        <div class="icon">S</div>
+        Online Shop Admin
+      </div>
+      <div class="topbar-user">
+        <span>admin@shop.ro</span>
+        <div class="topbar-avatar">AD</div>
+      </div>
+    </header>
+
+    <!-- ═══════════ SIDEBAR ═══════════ -->
+    <aside class="sidebar">
+      <nav class="sidebar-section">
+        <div class="sidebar-label">Principal</div>
+        <ul class="sidebar-nav">
+          <li><a href="#" class="active"><span class="nav-icon">&#9633;</span> Dashboard</a></li>
+        </ul>
+      </nav>
+
+      <nav class="sidebar-section">
+        <div class="sidebar-label">Catalog</div>
+        <ul class="sidebar-nav">
+          <li><a href="#" onclick="showTab('products')"><span class="nav-icon">&#9881;</span> Produse <span class="nav-badge">128</span></a></li>
+        </ul>
+      </nav>
+
+      <nav class="sidebar-section">
+        <div class="sidebar-label">Vanzari</div>
+        <ul class="sidebar-nav">
+          <li><a href="#" onclick="showTab('customers')"><span class="nav-icon">&#9786;</span> Clienti <span class="nav-badge">54</span></a></li>
+          <li><a href="#" onclick="showTab('orders')"><span class="nav-icon">&#9993;</span> Comenzi <span class="nav-badge">312</span></a></li>
+          <li><a href="#" onclick="showTab('order-details')"><span class="nav-icon">&#9776;</span> Detalii Comenzi</a></li>
+        </ul>
+      </nav>
+
+      <nav class="sidebar-section">
+        <div class="sidebar-label">Sistem</div>
+        <ul class="sidebar-nav">
+          <li><a href="#"><span class="nav-icon">&#9881;</span> Setari</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- ═══════════ MAIN CONTENT ═══════════ -->
+    <main class="main">
+
+      <!-- ── Stats ── -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Clienti</div>
+          <div class="stat-value">54</div>
+          <div class="stat-change up">+8 luna aceasta</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Produse</div>
+          <div class="stat-value">128</div>
+          <div class="stat-change up">+12 luna aceasta</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Comenzi</div>
+          <div class="stat-value">312</div>
+          <div class="stat-change up">+45 luna aceasta</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Venituri</div>
+          <div class="stat-value">24,580 RON</div>
+          <div class="stat-change down">-3% fata de luna trecuta</div>
+        </div>
+      </div>
+
+      <!-- ── Tabs ── -->
+      <div class="tabs">
+        <button class="tab active" onclick="showTab('products')">Produse</button>
+        <button class="tab" onclick="showTab('customers')">Clienti</button>
+        <button class="tab" onclick="showTab('orders')">Comenzi</button>
+        <button class="tab" onclick="showTab('order-details')">Detalii Comenzi</button>
+      </div>
+
+
+      <!-- ══════════════════════════════════════ -->
+      <!--              PRODUCTS TAB              -->
+      <!-- ══════════════════════════════════════ -->
+      <div id="tab-products" class="tab-panel active">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Toate Produsele</div>
+            <button class="btn btn-primary" onclick="toggleModal('modal-add-product')">+ Adauga Produs</button>
+          </div>
+
+          <div class="table-toolbar">
+            <div class="table-search">
+              <span class="search-icon">&#128269;</span>
+              <input type="text" placeholder="Cauta dupa nume, SKU sau categorie..." />
+            </div>
+            <div class="table-filters">
+              <select class="btn btn-outline btn-sm">
+                <option>Toate categoriile</option>
+                <option>Electronics</option>
+                <option>Clothing</option>
+                <option>Home</option>
+                <option>Sports</option>
+              </select>
+              <select class="btn btn-outline btn-sm">
+                <option>Stoc: Toate</option>
+                <option>In stoc</option>
+                <option>Stoc scazut</option>
+                <option>Fara stoc</option>
+              </select>
+            </div>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>SKU</th>
+                <th>Nume</th>
+                <th>Categorie</th>
+                <th>Pret</th>
+                <th>Greutate</th>
+                <th>Stoc</th>
+                <th>Data Creare</th>
+                <th>Actiuni</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-mono">1</td>
+                <td class="text-mono">SKU-EL-001</td>
+                <td>Laptop ProMax 15</td>
+                <td><span class="badge badge-info">Electronics</span></td>
+                <td class="text-right">4,599 RON</td>
+                <td class="text-right">2,100 g</td>
+                <td><span class="badge badge-success">45</span></td>
+                <td>2024-01-15</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-mono">2</td>
+                <td class="text-mono">SKU-EL-002</td>
+                <td>Monitor UltraWide 34"</td>
+                <td><span class="badge badge-info">Electronics</span></td>
+                <td class="text-right">2,199 RON</td>
+                <td class="text-right">6,800 g</td>
+                <td><span class="badge badge-success">22</span></td>
+                <td>2024-01-18</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-mono">3</td>
+                <td class="text-mono">SKU-CL-010</td>
+                <td>Tricou Sport Dry-Fit</td>
+                <td><span class="badge badge-neutral">Clothing</span></td>
+                <td class="text-right">89 RON</td>
+                <td class="text-right">180 g</td>
+                <td><span class="badge badge-warning">5</span></td>
+                <td>2024-02-03</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-mono">4</td>
+                <td class="text-mono">SKU-HM-020</td>
+                <td>Lampa LED Birou</td>
+                <td><span class="badge badge-neutral">Home</span></td>
+                <td class="text-right">149 RON</td>
+                <td class="text-right">950 g</td>
+                <td><span class="badge badge-danger">0</span></td>
+                <td>2024-02-10</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-mono">5</td>
+                <td class="text-mono">SKU-SP-015</td>
+                <td>Minge Fotbal Pro</td>
+                <td><span class="badge badge-neutral">Sports</span></td>
+                <td class="text-right">120 RON</td>
+                <td class="text-right">430 g</td>
+                <td><span class="badge badge-success">67</span></td>
+                <td>2024-03-01</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-mono">6</td>
+                <td class="text-mono">SKU-EL-003</td>
+                <td>Tastatura Mecanica RGB</td>
+                <td><span class="badge badge-info">Electronics</span></td>
+                <td class="text-right">349 RON</td>
+                <td class="text-right">820 g</td>
+                <td><span class="badge badge-success">31</span></td>
+                <td>2024-03-05</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-mono">7</td>
+                <td class="text-mono">SKU-CL-011</td>
+                <td>Geaca Iarna Puf</td>
+                <td><span class="badge badge-neutral">Clothing</span></td>
+                <td class="text-right">599 RON</td>
+                <td class="text-right">750 g</td>
+                <td><span class="badge badge-success">18</span></td>
+                <td>2024-03-12</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-mono">8</td>
+                <td class="text-mono">SKU-HM-021</td>
+                <td>Set Prosoape Bumbac</td>
+                <td><span class="badge badge-neutral">Home</span></td>
+                <td class="text-right">79 RON</td>
+                <td class="text-right">600 g</td>
+                <td><span class="badge badge-warning">8</span></td>
+                <td>2024-03-18</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="pagination">
+            <div class="pagination-info">
+              Afiseaza
+              <select>
+                <option>10</option>
+                <option>25</option>
+                <option>50</option>
+              </select>
+              din 128 produse
+            </div>
+            <div class="pagination-pages">
+              <button disabled>&laquo;</button>
+              <button disabled>&lsaquo;</button>
+              <button class="active">1</button>
+              <button>2</button>
+              <button>3</button>
+              <button>...</button>
+              <button>13</button>
+              <button>&rsaquo;</button>
+              <button>&raquo;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ══════════════════════════════════════ -->
+      <!--             CUSTOMERS TAB              -->
+      <!-- ══════════════════════════════════════ -->
+      <div id="tab-customers" class="tab-panel">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Toti Clientii</div>
+            <button class="btn btn-primary" onclick="toggleModal('modal-add-customer')">+ Adauga Client</button>
+          </div>
+
+          <div class="table-toolbar">
+            <div class="table-search">
+              <span class="search-icon">&#128269;</span>
+              <input type="text" placeholder="Cauta dupa nume, email sau telefon..." />
+            </div>
+            <div class="table-filters">
+              <select class="btn btn-outline btn-sm">
+                <option>Toate tarile</option>
+                <option>Romania</option>
+                <option>Germania</option>
+                <option>Franta</option>
+              </select>
+            </div>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nume Complet</th>
+                <th>Email</th>
+                <th>Telefon</th>
+                <th>Tara</th>
+                <th>Adresa Facturare</th>
+                <th>Adresa Livrare</th>
+                <th>Comenzi</th>
+                <th>Actiuni</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-mono">1</td>
+                <td>Andrei Popescu</td>
+                <td>andrei.popescu@email.ro</td>
+                <td>0722 111 222</td>
+                <td>Romania</td>
+                <td class="text-truncate">Str. Victoriei 45, Bucuresti</td>
+                <td class="text-truncate">Str. Victoriei 45, Bucuresti</td>
+                <td class="text-center"><span class="badge badge-info">7</span></td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-mono">2</td>
+                <td>Maria Ionescu</td>
+                <td>maria.ionescu@email.ro</td>
+                <td>0733 222 333</td>
+                <td>Romania</td>
+                <td class="text-truncate">Bd. Unirii 12, Cluj-Napoca</td>
+                <td class="text-truncate">Bd. Unirii 12, Cluj-Napoca</td>
+                <td class="text-center"><span class="badge badge-info">3</span></td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-mono">3</td>
+                <td>Klaus Muller</td>
+                <td>klaus.muller@email.de</td>
+                <td>+49 170 123 456</td>
+                <td>Germania</td>
+                <td class="text-truncate">Berliner Str. 88, Berlin</td>
+                <td class="text-truncate">Berliner Str. 88, Berlin</td>
+                <td class="text-center"><span class="badge badge-info">12</span></td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-mono">4</td>
+                <td>Elena Vasilescu</td>
+                <td>elena.v@email.ro</td>
+                <td>0744 333 444</td>
+                <td>Romania</td>
+                <td class="text-truncate">Str. Mihai Eminescu 7, Iasi</td>
+                <td class="text-truncate">Str. Libertatii 23, Iasi</td>
+                <td class="text-center"><span class="badge badge-neutral">0</span></td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-mono">5</td>
+                <td>Pierre Dubois</td>
+                <td>pierre.dubois@email.fr</td>
+                <td>+33 6 12 34 56</td>
+                <td>Franta</td>
+                <td class="text-truncate">15 Rue de Rivoli, Paris</td>
+                <td class="text-truncate">15 Rue de Rivoli, Paris</td>
+                <td class="text-center"><span class="badge badge-info">5</span></td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="pagination">
+            <div class="pagination-info">
+              Afiseaza
+              <select>
+                <option>10</option>
+                <option>25</option>
+                <option>50</option>
+              </select>
+              din 54 clienti
+            </div>
+            <div class="pagination-pages">
+              <button disabled>&laquo;</button>
+              <button disabled>&lsaquo;</button>
+              <button class="active">1</button>
+              <button>2</button>
+              <button>3</button>
+              <button>...</button>
+              <button>6</button>
+              <button>&rsaquo;</button>
+              <button>&raquo;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ══════════════════════════════════════ -->
+      <!--              ORDERS TAB                -->
+      <!-- ══════════════════════════════════════ -->
+      <div id="tab-orders" class="tab-panel">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Toate Comenzile</div>
+            <button class="btn btn-primary" onclick="toggleModal('modal-add-order')">+ Comanda Noua</button>
+          </div>
+
+          <div class="table-toolbar">
+            <div class="table-search">
+              <span class="search-icon">&#128269;</span>
+              <input type="text" placeholder="Cauta dupa email, adresa sau ID comanda..." />
+            </div>
+            <div class="table-filters">
+              <select class="btn btn-outline btn-sm">
+                <option>Toate statusurile</option>
+                <option>Processing</option>
+                <option>Shipped</option>
+                <option>Delivered</option>
+                <option>Cancelled</option>
+              </select>
+            </div>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Client</th>
+                <th>Email Comanda</th>
+                <th>Adresa Livrare</th>
+                <th>Data</th>
+                <th>Status</th>
+                <th>Suma</th>
+                <th>Detalii</th>
+                <th>Actiuni</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-mono">#1001</td>
+                <td>Andrei Popescu</td>
+                <td>andrei.popescu@email.ro</td>
+                <td class="text-truncate">Str. Victoriei 45, Bucuresti</td>
+                <td>2024-04-01</td>
+                <td><span class="badge badge-success">Delivered</span></td>
+                <td class="text-right">4,748 RON</td>
+                <td class="text-center"><span class="badge badge-info">3 items</span></td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-mono">#1002</td>
+                <td>Maria Ionescu</td>
+                <td>maria.ionescu@email.ro</td>
+                <td class="text-truncate">Bd. Unirii 12, Cluj-Napoca</td>
+                <td>2024-04-02</td>
+                <td><span class="badge badge-warning">Processing</span></td>
+                <td class="text-right">689 RON</td>
+                <td class="text-center"><span class="badge badge-info">2 items</span></td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-mono">#1003</td>
+                <td>Klaus Muller</td>
+                <td>klaus.muller@email.de</td>
+                <td class="text-truncate">Berliner Str. 88, Berlin</td>
+                <td>2024-04-03</td>
+                <td><span class="badge badge-info">Shipped</span></td>
+                <td class="text-right">2,548 RON</td>
+                <td class="text-center"><span class="badge badge-info">1 item</span></td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-mono">#1004</td>
+                <td>Pierre Dubois</td>
+                <td>pierre.dubois@email.fr</td>
+                <td class="text-truncate">15 Rue de Rivoli, Paris</td>
+                <td>2024-04-05</td>
+                <td><span class="badge badge-danger">Cancelled</span></td>
+                <td class="text-right">120 RON</td>
+                <td class="text-center"><span class="badge badge-info">1 item</span></td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-mono">#1005</td>
+                <td>Andrei Popescu</td>
+                <td>andrei.popescu@email.ro</td>
+                <td class="text-truncate">Str. Victoriei 45, Bucuresti</td>
+                <td>2024-04-07</td>
+                <td><span class="badge badge-warning">Processing</span></td>
+                <td class="text-right">947 RON</td>
+                <td class="text-center"><span class="badge badge-info">4 items</span></td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-mono">#1006</td>
+                <td>Elena Vasilescu</td>
+                <td>elena.v@email.ro</td>
+                <td class="text-truncate">Str. Libertatii 23, Iasi</td>
+                <td>2024-04-08</td>
+                <td><span class="badge badge-success">Delivered</span></td>
+                <td class="text-right">228 RON</td>
+                <td class="text-center"><span class="badge badge-info">2 items</span></td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="pagination">
+            <div class="pagination-info">
+              Afiseaza
+              <select>
+                <option>10</option>
+                <option>25</option>
+                <option>50</option>
+              </select>
+              din 312 comenzi
+            </div>
+            <div class="pagination-pages">
+              <button disabled>&laquo;</button>
+              <button disabled>&lsaquo;</button>
+              <button class="active">1</button>
+              <button>2</button>
+              <button>3</button>
+              <button>...</button>
+              <button>32</button>
+              <button>&rsaquo;</button>
+              <button>&raquo;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ══════════════════════════════════════ -->
+      <!--           ORDER DETAILS TAB            -->
+      <!-- ══════════════════════════════════════ -->
+      <div id="tab-order-details" class="tab-panel">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Detalii Comenzi</div>
+            <button class="btn btn-primary" onclick="toggleModal('modal-add-order-detail')">+ Adauga Detaliu</button>
+          </div>
+
+          <div class="table-toolbar">
+            <div class="table-search">
+              <span class="search-icon">&#128269;</span>
+              <input type="text" placeholder="Cauta dupa SKU, comanda sau produs..." />
+            </div>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Comanda</th>
+                <th>Produs</th>
+                <th>SKU</th>
+                <th>Cantitate</th>
+                <th>Pret Unitar</th>
+                <th>Total Linie</th>
+                <th>Actiuni</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-mono">1</td>
+                <td class="text-mono">#1001</td>
+                <td>Laptop ProMax 15</td>
+                <td class="text-mono">SKU-EL-001</td>
+                <td class="text-center">1</td>
+                <td class="text-right">4,599 RON</td>
+                <td class="text-right">4,599 RON</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-mono">2</td>
+                <td class="text-mono">#1001</td>
+                <td>Tricou Sport Dry-Fit</td>
+                <td class="text-mono">SKU-CL-010</td>
+                <td class="text-center">2</td>
+                <td class="text-right">89 RON</td>
+                <td class="text-right">178 RON</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-mono">3</td>
+                <td class="text-mono">#1001</td>
+                <td>Minge Fotbal Pro</td>
+                <td class="text-mono">SKU-SP-015</td>
+                <td class="text-center">1</td>
+                <td class="text-right">120 RON</td>
+                <td class="text-right">120 RON</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-mono">4</td>
+                <td class="text-mono">#1002</td>
+                <td>Geaca Iarna Puf</td>
+                <td class="text-mono">SKU-CL-011</td>
+                <td class="text-center">1</td>
+                <td class="text-right">599 RON</td>
+                <td class="text-right">599 RON</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-mono">5</td>
+                <td class="text-mono">#1002</td>
+                <td>Tricou Sport Dry-Fit</td>
+                <td class="text-mono">SKU-CL-010</td>
+                <td class="text-center">1</td>
+                <td class="text-right">89 RON</td>
+                <td class="text-right">89 RON</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-mono">6</td>
+                <td class="text-mono">#1003</td>
+                <td>Monitor UltraWide 34"</td>
+                <td class="text-mono">SKU-EL-002</td>
+                <td class="text-center">1</td>
+                <td class="text-right">2,199 RON</td>
+                <td class="text-right">2,199 RON</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-mono">7</td>
+                <td class="text-mono">#1003</td>
+                <td>Tastatura Mecanica RGB</td>
+                <td class="text-mono">SKU-EL-003</td>
+                <td class="text-center">1</td>
+                <td class="text-right">349 RON</td>
+                <td class="text-right">349 RON</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-mono">8</td>
+                <td class="text-mono">#1004</td>
+                <td>Minge Fotbal Pro</td>
+                <td class="text-mono">SKU-SP-015</td>
+                <td class="text-center">1</td>
+                <td class="text-right">120 RON</td>
+                <td class="text-right">120 RON</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon" title="Editeaza">&#9998;</button>
+                    <button class="btn-icon danger" title="Sterge">&#10005;</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="pagination">
+            <div class="pagination-info">
+              Afiseaza
+              <select>
+                <option>10</option>
+                <option>25</option>
+                <option>50</option>
+              </select>
+              din 847 detalii
+            </div>
+            <div class="pagination-pages">
+              <button disabled>&laquo;</button>
+              <button disabled>&lsaquo;</button>
+              <button class="active">1</button>
+              <button>2</button>
+              <button>3</button>
+              <button>...</button>
+              <button>85</button>
+              <button>&rsaquo;</button>
+              <button>&raquo;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!--          MODAL: ADD PRODUCT                -->
+  <!-- ══════════════════════════════════════════ -->
+  <div id="modal-add-product" class="modal-overlay" style="display: none;">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Adauga Produs Nou</div>
+        <button class="btn-icon" onclick="toggleModal('modal-add-product')">&#10005;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">SKU <span class="required">*</span></label>
+            <input class="form-input" type="text" placeholder="ex: SKU-EL-004" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Nume <span class="required">*</span></label>
+            <input class="form-input" type="text" placeholder="Numele produsului" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Pret (RON) <span class="required">*</span></label>
+            <input class="form-input" type="number" placeholder="0" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Greutate (g) <span class="required">*</span></label>
+            <input class="form-input" type="number" placeholder="0" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Categorie <span class="required">*</span></label>
+            <select class="form-select">
+              <option value="">Selecteaza categoria</option>
+              <option>Electronics</option>
+              <option>Clothing</option>
+              <option>Home</option>
+              <option>Sports</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Stoc <span class="required">*</span></label>
+            <input class="form-input" type="number" placeholder="0" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Data Creare <span class="required">*</span></label>
+            <input class="form-input" type="date" />
+          </div>
+          <div class="form-group full-width">
+            <label class="form-label">Descriere <span class="required">*</span></label>
+            <textarea class="form-textarea" placeholder="Descrierea produsului..."></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="toggleModal('modal-add-product')">Anuleaza</button>
+        <button class="btn btn-primary">Salveaza Produsul</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!--          MODAL: ADD CUSTOMER               -->
+  <!-- ══════════════════════════════════════════ -->
+  <div id="modal-add-customer" class="modal-overlay" style="display: none;">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Adauga Client Nou</div>
+        <button class="btn-icon" onclick="toggleModal('modal-add-customer')">&#10005;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label class="form-label">Nume Complet <span class="required">*</span></label>
+            <input class="form-input" type="text" placeholder="ex: Ion Popescu" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email <span class="required">*</span></label>
+            <input class="form-input" type="email" placeholder="email@exemplu.ro" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Parola <span class="required">*</span></label>
+            <input class="form-input" type="password" placeholder="Minim 8 caractere" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Telefon <span class="required">*</span></label>
+            <input class="form-input" type="tel" placeholder="0722 123 456" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tara <span class="required">*</span></label>
+            <select class="form-select">
+              <option value="">Selecteaza tara</option>
+              <option>Romania</option>
+              <option>Germania</option>
+              <option>Franta</option>
+              <option>Italia</option>
+            </select>
+          </div>
+          <div class="form-group full-width">
+            <label class="form-label">Adresa Facturare <span class="required">*</span></label>
+            <input class="form-input" type="text" placeholder="Strada, numar, oras" />
+          </div>
+          <div class="form-group full-width">
+            <label class="form-label">Adresa Livrare Implicita <span class="required">*</span></label>
+            <input class="form-input" type="text" placeholder="Strada, numar, oras" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="toggleModal('modal-add-customer')">Anuleaza</button>
+        <button class="btn btn-primary">Salveaza Clientul</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!--          MODAL: ADD ORDER                  -->
+  <!-- ══════════════════════════════════════════ -->
+  <div id="modal-add-order" class="modal-overlay" style="display: none;">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Comanda Noua</div>
+        <button class="btn-icon" onclick="toggleModal('modal-add-order')">&#10005;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Client <span class="required">*</span></label>
+            <select class="form-select">
+              <option value="">Selecteaza clientul</option>
+              <option>Andrei Popescu (ID: 1)</option>
+              <option>Maria Ionescu (ID: 2)</option>
+              <option>Klaus Muller (ID: 3)</option>
+              <option>Elena Vasilescu (ID: 4)</option>
+              <option>Pierre Dubois (ID: 5)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Suma (RON) <span class="required">*</span></label>
+            <input class="form-input" type="number" placeholder="0" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Comanda <span class="required">*</span></label>
+            <input class="form-input" type="email" placeholder="email@exemplu.ro" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Data Comanda <span class="required">*</span></label>
+            <input class="form-input" type="date" />
+          </div>
+          <div class="form-group full-width">
+            <label class="form-label">Adresa Comanda <span class="required">*</span></label>
+            <input class="form-input" type="text" placeholder="Adresa de pe comanda" />
+          </div>
+          <div class="form-group full-width">
+            <label class="form-label">Adresa Livrare <span class="required">*</span></label>
+            <input class="form-input" type="text" placeholder="Adresa de livrare" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Status <span class="required">*</span></label>
+            <select class="form-select">
+              <option value="">Selecteaza status</option>
+              <option>Processing</option>
+              <option>Shipped</option>
+              <option>Delivered</option>
+              <option>Cancelled</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="toggleModal('modal-add-order')">Anuleaza</button>
+        <button class="btn btn-primary">Salveaza Comanda</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!--       MODAL: ADD ORDER DETAIL              -->
+  <!-- ══════════════════════════════════════════ -->
+  <div id="modal-add-order-detail" class="modal-overlay" style="display: none;">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Adauga Detaliu Comanda</div>
+        <button class="btn-icon" onclick="toggleModal('modal-add-order-detail')">&#10005;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Comanda <span class="required">*</span></label>
+            <select class="form-select">
+              <option value="">Selecteaza comanda</option>
+              <option>#1001 — Andrei Popescu</option>
+              <option>#1002 — Maria Ionescu</option>
+              <option>#1003 — Klaus Muller</option>
+              <option>#1004 — Pierre Dubois</option>
+              <option>#1005 — Andrei Popescu</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Produs (ID) <span class="required">*</span></label>
+            <select class="form-select">
+              <option value="">Selecteaza produsul</option>
+              <option>1 — Laptop ProMax 15</option>
+              <option>2 — Monitor UltraWide 34"</option>
+              <option>3 — Tricou Sport Dry-Fit</option>
+              <option>4 — Lampa LED Birou</option>
+              <option>5 — Minge Fotbal Pro</option>
+              <option>6 — Tastatura Mecanica RGB</option>
+            </select>
+            <span class="form-hint">productId — obligatoriu conform @NotNull</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">SKU <span class="required">*</span></label>
+            <input class="form-input" type="text" placeholder="ex: SKU-EL-001" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Cantitate <span class="required">*</span></label>
+            <input class="form-input" type="number" placeholder="1" min="1" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Pret Unitar (RON) <span class="required">*</span></label>
+            <input class="form-input" type="number" placeholder="0" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="toggleModal('modal-add-order-detail')">Anuleaza</button>
+        <button class="btn btn-primary">Salveaza Detaliul</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── Minimal JS for tab switching & modals ── -->
+  <script>
+    function showTab(name) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+
+      document.getElementById('tab-' + name).classList.add('active');
+
+      const labels = { products: 'Produse', customers: 'Clienti', orders: 'Comenzi', 'order-details': 'Detalii Comenzi' };
+      document.querySelectorAll('.tab').forEach(t => {
+        if (t.textContent.trim() === labels[name]) t.classList.add('active');
+      });
+    }
+
+    function toggleModal(id) {
+      const el = document.getElementById(id);
+      el.style.display = el.style.display === 'none' ? 'flex' : 'none';
+    }
+
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', e => {
+        if (e.target === overlay) overlay.style.display = 'none';
+      });
+    });
+  </script>
+
+</body>
+</html>

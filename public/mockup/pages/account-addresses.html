@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adrese — Online Shop</title>
+  <link rel="stylesheet" href="../shared.css" />
+</head>
+<body>
+
+  <div class="mockup-bar">
+    <div><a href="index.html">&larr; Toate paginile</a></div>
+    <div class="mockup-route">/account/addresses</div>
+    <div><a href="account-orders.html">Comenzi</a> | <a href="account-profile.html">Profil</a></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="products.html" class="navbar-brand"><div class="brand-icon">S</div> OnlineShop</a>
+      <ul class="navbar-links">
+        <li><a href="products.html">Produse</a></li>
+        <li><a href="cart.html">Cos</a></li>
+        <li><a href="account-orders.html" class="active">Comenzile mele</a></li>
+      </ul>
+      <div class="navbar-actions">
+        <div class="user-menu"><div class="user-avatar">AP</div> Andrei P.</div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="section" style="padding-bottom: 0;">
+      <div class="section-title">Contul meu</div>
+      <div class="section-subtitle">Gestioneaza contul si comenzile tale</div>
+    </div>
+
+    <div class="account-layout">
+      <div class="account-sidebar">
+        <a href="account-orders.html">&#128230; Comenzile mele</a>
+        <a href="account-profile.html">&#9786; Profil</a>
+        <a href="account-addresses.html" class="active">&#127968; Adrese</a>
+        <a href="login.html">&#10140; Deconectare</a>
+      </div>
+
+      <div class="account-card">
+        <div class="account-card-header">
+          <h2>Adresele mele</h2>
+          <button class="btn btn-sm btn-primary" id="save-addr">Salveaza</button>
+        </div>
+        <div class="account-card-body">
+          <form id="addr-form">
+            <div class="form-group">
+              <label class="form-label" for="addr-billing">Adresa Facturare</label>
+              <input id="addr-billing" class="form-input" type="text" value="Str. Victoriei 45, Sector 1, Bucuresti, 010062" />
+              <span class="form-hint">billingAddress — adresa folosita pe facturi</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="addr-shipping">Adresa Livrare Implicita</label>
+              <input id="addr-shipping" class="form-input" type="text" value="Str. Victoriei 45, Sector 1, Bucuresti, 010062" />
+              <span class="form-hint">defaultShippingAddress — adresa precompletata la checkout</span>
+            </div>
+            <div class="form-group">
+              <label class="form-checkbox" id="copy-billing-wrap">
+                <input type="checkbox" id="copy-billing" />
+                Foloseste aceeasi adresa pentru livrare
+              </label>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer"><div class="footer-inner"><span>2026 OnlineShop</span><ul class="footer-links"><li><a href="#">Termeni</a></li></ul></div></footer>
+
+  <script src="../shared.js"></script>
+  <script>
+    const billing = document.getElementById("addr-billing");
+    const shipping = document.getElementById("addr-shipping");
+    const copy = document.getElementById("copy-billing");
+
+    copy.addEventListener("change", () => {
+      if (copy.checked) {
+        shipping.value = billing.value;
+        shipping.disabled = true;
+      } else {
+        shipping.disabled = false;
+      }
+    });
+    billing.addEventListener("input", () => {
+      if (copy.checked) shipping.value = billing.value;
+    });
+
+    const btn = document.getElementById("save-addr");
+    btn.addEventListener("click", () => {
+      btn.classList.add("is-loading");
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.classList.remove("is-loading");
+        btn.disabled = false;
+        showToast({ type: "success", title: "Adrese salvate", message: "Adresele tale au fost actualizate." });
+      }, 600);
+    });
+  </script>
+
+</body>
+</html>

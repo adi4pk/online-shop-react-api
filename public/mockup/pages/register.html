@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register — Online Shop</title>
+  <link rel="stylesheet" href="../shared.css" />
+</head>
+<body>
+
+  <div class="mockup-bar">
+    <div><a href="index.html">&larr; Toate paginile</a></div>
+    <div class="mockup-route">/register</div>
+    <div>RegisterPage &rarr; <a href="login.html">LoginPage</a></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="products.html" class="navbar-brand"><div class="brand-icon">S</div> OnlineShop</a>
+      <ul class="navbar-links">
+        <li><a href="products.html">Produse</a></li>
+      </ul>
+      <div class="navbar-actions">
+        <a href="login.html" class="btn btn-sm btn-outline">Autentificare</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="auth-wrapper">
+    <div class="auth-card auth-card--wide">
+      <div class="auth-header">
+        <h1>Creeaza un cont</h1>
+        <p>Completeaza datele pentru a-ti crea contul</p>
+      </div>
+
+      <form id="register-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="reg-name">Nume Complet <span class="required">*</span></label>
+          <input class="form-input" id="reg-name" type="text" placeholder="ex: Ion Popescu" required autocomplete="name" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="reg-email">Email <span class="required">*</span></label>
+            <input class="form-input" id="reg-email" type="email" placeholder="email@exemplu.ro" required autocomplete="email" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="reg-phone">Telefon <span class="required">*</span></label>
+            <input class="form-input" id="reg-phone" type="tel" placeholder="0722 123 456" required autocomplete="tel" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="reg-pass">Parola <span class="required">*</span></label>
+            <div class="password-toggle">
+              <input class="form-input" id="reg-pass" type="password" placeholder="Minim 8 caractere" required autocomplete="new-password" />
+              <button type="button" data-toggle-password="reg-pass" aria-label="Arata parola">👁</button>
+            </div>
+            <div class="password-meter"><span></span><span></span><span></span><span></span></div>
+            <div class="password-meter-label">Foloseste litere mari, cifre si simboluri.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="reg-pass2">Confirma Parola <span class="required">*</span></label>
+            <div class="password-toggle">
+              <input class="form-input" id="reg-pass2" type="password" placeholder="Repeta parola" required autocomplete="new-password" />
+              <button type="button" data-toggle-password="reg-pass2" aria-label="Arata parola">👁</button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reg-country">Tara <span class="required">*</span></label>
+          <select class="form-select" id="reg-country" required>
+            <option value="">Selecteaza tara</option>
+            <option>Romania</option>
+            <option>Germania</option>
+            <option>Franta</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reg-billing">Adresa Facturare <span class="required">*</span></label>
+          <input class="form-input" id="reg-billing" type="text" placeholder="Strada, numar, oras, cod postal" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reg-shipping">Adresa Livrare Implicita <span class="required">*</span></label>
+          <input class="form-input" id="reg-shipping" type="text" placeholder="Strada, numar, oras, cod postal" required />
+          <span class="form-hint">Poate fi aceeasi cu adresa de facturare</span>
+        </div>
+        <div class="form-group">
+          <label class="form-checkbox"><input type="checkbox" id="reg-tos" /> Sunt de acord cu <a href="#">Termenii si Conditiile</a></label>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="reg-submit">Creeaza Contul</button>
+      </form>
+
+      <div class="auth-footer">
+        Ai deja cont? <a href="login.html">Autentifica-te</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>2026 OnlineShop</span>
+      <ul class="footer-links">
+        <li><a href="#">Termeni</a></li>
+        <li><a href="#">Confidentialitate</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="../shared.js"></script>
+  <script>
+    wirePasswordMeter("#reg-pass", ".password-meter");
+
+    const form = document.getElementById("register-form");
+    const submit = document.getElementById("reg-submit");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const required = form.querySelectorAll("[required]");
+      let firstInvalid = null;
+      let passMatch = true;
+      required.forEach((el) => {
+        if (!el.value.trim()) {
+          el.classList.add("is-invalid");
+          if (!firstInvalid) firstInvalid = el;
+        } else {
+          el.classList.remove("is-invalid");
+        }
+      });
+      const p1 = document.getElementById("reg-pass");
+      const p2 = document.getElementById("reg-pass2");
+      if (p1.value && p2.value && p1.value !== p2.value) {
+        p2.classList.add("is-invalid");
+        passMatch = false;
+        if (!firstInvalid) firstInvalid = p2;
+      }
+      if (!document.getElementById("reg-tos").checked) {
+        showToast({ type: "warning", title: "Termeni", message: "Accepta termenii si conditiile pentru a continua." });
+        return;
+      }
+      if (firstInvalid || !passMatch) {
+        showToast({ type: "error", title: "Date invalide", message: passMatch ? "Verifica campurile marcate cu rosu." : "Parolele nu coincid." });
+        firstInvalid && firstInvalid.focus();
+        return;
+      }
+      submit.classList.add("is-loading");
+      submit.disabled = true;
+      setTimeout(() => { window.location.href = "products.html"; }, 700);
+    });
+  </script>
+
+</body>
+</html>

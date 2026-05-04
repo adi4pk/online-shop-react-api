@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login — Online Shop</title>
+  <link rel="stylesheet" href="../shared.css" />
+</head>
+<body>
+
+  <div class="mockup-bar">
+    <div><a href="index.html">&larr; Toate paginile</a></div>
+    <div class="mockup-route">/login</div>
+    <div>LoginPage &rarr; <a href="register.html">RegisterPage</a></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="products.html" class="navbar-brand"><div class="brand-icon">S</div> OnlineShop</a>
+      <ul class="navbar-links">
+        <li><a href="products.html">Produse</a></li>
+      </ul>
+      <div class="navbar-actions">
+        <a href="register.html" class="btn btn-sm btn-outline">Inregistrare</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h1>Bine ai revenit</h1>
+        <p>Introdu datele tale pentru a te autentifica</p>
+      </div>
+
+      <form id="login-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="login-email">Email <span class="required">*</span></label>
+          <input class="form-input" id="login-email" type="email" placeholder="email@exemplu.ro" required autocomplete="email" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="login-password">Parola <span class="required">*</span></label>
+          <div class="password-toggle">
+            <input class="form-input" id="login-password" type="password" placeholder="Introdu parola" required autocomplete="current-password" />
+            <button type="button" data-toggle-password="login-password" aria-label="Arata parola">👁</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <label class="form-checkbox"><input type="checkbox" /> Tine-ma minte</label>
+            <a href="#" style="font-size: 13px;">Ai uitat parola?</a>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="login-submit">Autentificare</button>
+      </form>
+
+      <div class="auth-divider">sau</div>
+      <button class="btn btn-outline btn-block">Continua cu Google</button>
+
+      <div class="auth-footer">
+        Nu ai cont? <a href="register.html">Creeaza unul acum</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>2026 OnlineShop</span>
+      <ul class="footer-links">
+        <li><a href="#">Termeni</a></li>
+        <li><a href="#">Confidentialitate</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="../shared.js"></script>
+  <script>
+    // Demo: simulate a login submit with loading state, then redirect.
+    const form = document.getElementById("login-form");
+    const submit = document.getElementById("login-submit");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("login-email");
+      const pass = document.getElementById("login-password");
+      let ok = true;
+      if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+        email.classList.add("is-invalid");
+        ok = false;
+      }
+      if (!pass.value) {
+        pass.classList.add("is-invalid");
+        ok = false;
+      }
+      if (!ok) {
+        showToast({ type: "error", title: "Verifica datele", message: "Email sau parola lipseste sau e invalid." });
+        return;
+      }
+      submit.classList.add("is-loading");
+      submit.disabled = true;
+      setTimeout(() => { window.location.href = "products.html"; }, 600);
+    });
+  </script>
+
+</body>
+</html>

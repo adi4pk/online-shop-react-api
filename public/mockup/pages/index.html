@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Online Shop — Mockup Sitemap</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #1a56db;
+      --primary-light: #e8eefb;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --text: #1e293b;
+      --text-secondary: #64748b;
+      --text-light: #94a3b8;
+    }
+
+    body {
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 40px 24px;
+    }
+
+    .header {
+      max-width: 1100px;
+      margin: 0 auto 40px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto 12px;
+    }
+
+    .header .tech {
+      font-size: 12px;
+      color: var(--text-light);
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .header .tech span {
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-weight: 500;
+    }
+
+    /* ── Flow Sections ── */
+    .flow-section {
+      max-width: 1100px;
+      margin: 0 auto 48px;
+    }
+
+    .flow-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-light);
+      margin-bottom: 12px;
+      padding-left: 4px;
+    }
+
+    .flow-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-light);
+      font-size: 20px;
+      padding: 8px 0;
+    }
+
+    /* ── Cards Grid ── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(26, 86, 219, 0.12);
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .card-icon.auth { background: #fef3c7; }
+    .card-icon.shop { background: #dbeafe; }
+    .card-icon.cart { background: #dcfce7; }
+    .card-icon.account { background: #f3e8ff; }
+    .card-icon.admin { background: #fee2e2; }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+    }
+
+    .card-route {
+      font-family: "SF Mono", "Fira Code", monospace;
+      font-size: 11px;
+      color: var(--primary);
+      background: var(--primary-light);
+      padding: 2px 8px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .card-components {
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--text-light);
+    }
+
+    .card-components span {
+      display: inline-block;
+      background: var(--bg);
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin: 2px 2px 0 0;
+      font-family: "SF Mono", "Fira Code", monospace;
+    }
+
+    /* ── Flow diagram ── */
+    .flow-diagram {
+      max-width: 1100px;
+      margin: 0 auto 48px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+    }
+
+    .flow-diagram h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--text-secondary);
+    }
+
+    .flow-map {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-family: "SF Mono", "Fira Code", monospace;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .flow-map .route {
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    .flow-map .arrow {
+      color: var(--text-light);
+      margin: 0 6px;
+    }
+
+    .flow-map .note {
+      color: var(--text-light);
+      font-style: italic;
+      font-family: inherit;
+    }
+
+    /* ── Entities reference ── */
+    .entities {
+      max-width: 1100px;
+      margin: 0 auto 48px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+    }
+
+    .entities h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: var(--text-secondary);
+    }
+
+    .entity-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .entity-box {
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 14px;
+    }
+
+    .entity-box h4 {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-family: "SF Mono", "Fira Code", monospace;
+      color: var(--primary);
+    }
+
+    .entity-box ul {
+      list-style: none;
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-family: "SF Mono", "Fira Code", monospace;
+    }
+
+    .entity-box li {
+      padding: 2px 0;
+    }
+
+    .entity-box .pk {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .entity-box .fk {
+      color: #9333ea;
+    }
+
+    @media (max-width: 768px) {
+      .cards { grid-template-columns: 1fr; }
+      .entity-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Online Shop — Mockup</h1>
+    <p>Harta vizuala a tuturor paginilor. Fiecare card deschide pagina HTML corespunzatoare. Structura reflecta viitoarele rute React.</p>
+    <div class="tech">
+      <span>React</span>
+      <span>React Router</span>
+      <span>Spring Boot 3.5</span>
+      <span>Spring Security + JWT</span>
+      <span>MySQL</span>
+    </div>
+  </div>
+
+
+  <!-- ── Flow Diagram ── -->
+  <div class="flow-diagram">
+    <h3>Flow utilizator</h3>
+    <div class="flow-map">
+      <div>
+        <span class="route">/login</span>
+        <span class="arrow">&rarr;</span>
+        <span class="route">/register</span>
+        <span class="note"> (public, fara JWT)</span>
+      </div>
+      <div>
+        <span class="route">/products</span>
+        <span class="arrow">&rarr;</span>
+        <span class="route">/products/:id</span>
+        <span class="arrow">&rarr;</span>
+        <span class="route">/cart</span>
+        <span class="arrow">&rarr;</span>
+        <span class="route">/checkout</span>
+        <span class="arrow">&rarr;</span>
+        <span class="route">/confirmation</span>
+      </div>
+      <div>
+        <span class="route">/account/orders</span>
+        <span class="arrow">|</span>
+        <span class="route">/account/profile</span>
+        <span class="arrow">|</span>
+        <span class="route">/account/addresses</span>
+        <span class="note"> (protejat cu JWT)</span>
+      </div>
+      <div>
+        <span class="route">/admin</span>
+        <span class="note"> (protejat cu JWT + rol ADMIN)</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── Auth ── -->
+  <div class="flow-section">
+    <div class="flow-label">Autentificare (Public)</div>
+    <div class="cards">
+      <a href="login.html" class="card">
+        <div class="card-icon auth">&#128274;</div>
+        <div class="card-title">Login</div>
+        <div class="card-desc">Autentificare cu email si parola. Primeste JWT token.</div>
+        <div class="card-route">/login</div>
+        <div class="card-components">
+          <span>LoginPage</span>
+          <span>AuthForm</span>
+        </div>
+      </a>
+      <a href="register.html" class="card">
+        <div class="card-icon auth">&#128221;</div>
+        <div class="card-title">Register</div>
+        <div class="card-desc">Inregistrare client nou. Campuri din CustomerDto.</div>
+        <div class="card-route">/register</div>
+        <div class="card-components">
+          <span>RegisterPage</span>
+          <span>AuthForm</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="flow-arrow">&darr;</div>
+
+  <!-- ── Shopping ── -->
+  <div class="flow-section">
+    <div class="flow-label">Catalog & Cumparaturi (Public + Autentificat)</div>
+    <div class="cards">
+      <a href="products.html" class="card">
+        <div class="card-icon shop">&#128722;</div>
+        <div class="card-title">Produse</div>
+        <div class="card-desc">Grid produse cu filtre, sortare, paginare.</div>
+        <div class="card-route">/products</div>
+        <div class="card-components">
+          <span>ProductsPage</span>
+          <span>ProductCard</span>
+          <span>SearchBar</span>
+          <span>Pagination</span>
+        </div>
+      </a>
+      <a href="product-detail.html" class="card">
+        <div class="card-icon shop">&#128196;</div>
+        <div class="card-title">Detaliu Produs</div>
+        <div class="card-desc">Specificatii, selector cantitate, adauga in cos.</div>
+        <div class="card-route">/products/:id</div>
+        <div class="card-components">
+          <span>ProductDetailPage</span>
+          <span>QuantitySelector</span>
+        </div>
+      </a>
+      <a href="cart.html" class="card">
+        <div class="card-icon cart">&#128722;</div>
+        <div class="card-title">Cos Cumparaturi</div>
+        <div class="card-desc">Lista produse, cantitati, sumar pret, TVA.</div>
+        <div class="card-route">/cart</div>
+        <div class="card-components">
+          <span>CartPage</span>
+          <span>CartItem</span>
+          <span>CartSummary</span>
+        </div>
+      </a>
+      <a href="checkout.html" class="card">
+        <div class="card-icon cart">&#128179;</div>
+        <div class="card-title">Checkout</div>
+        <div class="card-desc">Adresa livrare, metoda plata, plasare comanda.</div>
+        <div class="card-route">/checkout</div>
+        <div class="card-components">
+          <span>CheckoutPage</span>
+          <span>ShippingForm</span>
+          <span>PaymentForm</span>
+        </div>
+      </a>
+      <a href="confirmation.html" class="card">
+        <div class="card-icon cart">&#10003;</div>
+        <div class="card-title">Confirmare</div>
+        <div class="card-desc">Comanda plasata cu succes, detalii comanda.</div>
+        <div class="card-route">/confirmation/:orderId</div>
+        <div class="card-components">
+          <span>ConfirmationPage</span>
+          <span>OrderSummary</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="flow-arrow">&darr;</div>
+
+  <!-- ── Account ── -->
+  <div class="flow-section">
+    <div class="flow-label">Contul meu (Protejat — JWT necesar)</div>
+    <div class="cards">
+      <a href="account-orders.html" class="card">
+        <div class="card-icon account">&#128230;</div>
+        <div class="card-title">Comenzile mele</div>
+        <div class="card-desc">Istoric comenzi cu status, filtrare, detalii.</div>
+        <div class="card-route">/account/orders</div>
+        <div class="card-components">
+          <span>OrdersPage</span>
+          <span>OrderRow</span>
+          <span>AccountLayout</span>
+        </div>
+      </a>
+      <a href="account-profile.html" class="card">
+        <div class="card-icon account">&#9786;</div>
+        <div class="card-title">Profil</div>
+        <div class="card-desc">Editare nume, email, telefon, schimbare parola.</div>
+        <div class="card-route">/account/profile</div>
+        <div class="card-components">
+          <span>ProfilePage</span>
+          <span>ProfileForm</span>
+          <span>PasswordForm</span>
+        </div>
+      </a>
+      <a href="account-addresses.html" class="card">
+        <div class="card-icon account">&#127968;</div>
+        <div class="card-title">Adrese</div>
+        <div class="card-desc">Adresa facturare si adresa livrare implicita.</div>
+        <div class="card-route">/account/addresses</div>
+        <div class="card-components">
+          <span>AddressesPage</span>
+          <span>AddressForm</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="flow-arrow">&darr;</div>
+
+  <!-- ── Admin ── -->
+  <div class="flow-section">
+    <div class="flow-label">Admin Dashboard (Protejat — JWT + ROLE_ADMIN)</div>
+    <div class="cards">
+      <a href="../index.html" class="card">
+        <div class="card-icon admin">&#9881;</div>
+        <div class="card-title">Admin Dashboard</div>
+        <div class="card-desc">CRUD complet: produse, clienti, comenzi, detalii comenzi. Tabele cu paginare.</div>
+        <div class="card-route">/admin</div>
+        <div class="card-components">
+          <span>AdminLayout</span>
+          <span>ProductsTable</span>
+          <span>CustomersTable</span>
+          <span>OrdersTable</span>
+          <span>OrderDetailsTable</span>
+          <span>AddModal</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ── Error / utility pages ── -->
+  <div class="flow-section">
+    <div class="flow-label">Pagini utilitare</div>
+    <div class="cards">
+      <a href="404.html" class="card">
+        <div class="card-icon" style="background: #fee2e2; color: #991b1b;">&#9888;</div>
+        <div class="card-title">404 Not Found</div>
+        <div class="card-desc">Pagina afisata cand ruta nu exista. CTA spre catalogul de produse.</div>
+        <div class="card-route">/* (404)</div>
+        <div class="card-components">
+          <span>NotFoundPage</span>
+          <span>EmptyState</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+
+  <!-- ── Entities Reference ── -->
+  <div class="entities">
+    <h3>Entitati Spring (referinta pentru componente)</h3>
+    <div class="entity-grid">
+      <div class="entity-box">
+        <h4>Customer</h4>
+        <ul>
+          <li class="pk">id: Long</li>
+          <li>email: String</li>
+          <li>password: String</li>
+          <li>fullName: String</li>
+          <li>billingAddress: String</li>
+          <li>defaultShippingAddress: String</li>
+          <li>country: String</li>
+          <li>phone: String</li>
+          <li>orderSet: Set&lt;Orders&gt;</li>
+        </ul>
+      </div>
+      <div class="entity-box">
+        <h4>Orders</h4>
+        <ul>
+          <li class="pk">id: Long</li>
+          <li>ammount: int</li>
+          <li>shippingAdress: String</li>
+          <li>orderAdress: String</li>
+          <li>orderEmail: String</li>
+          <li>order_date: LocalDate</li>
+          <li>orderStatus: String</li>
+          <li class="fk">customer: Customer</li>
+          <li>orderDetailsSet: Set</li>
+        </ul>
+      </div>
+      <div class="entity-box">
+        <h4>OrderDetails</h4>
+        <ul>
+          <li class="pk">id: Long</li>
+          <li>price: int</li>
+          <li>sku: String</li>
+          <li>quantity: int</li>
+          <li class="fk">order: Orders</li>
+          <li class="fk">product: Products</li>
+        </ul>
+      </div>
+      <div class="entity-box">
+        <h4>Products</h4>
+        <ul>
+          <li class="pk">id: Long</li>
+          <li>sku: String</li>
+          <li>name: String</li>
+          <li>price: int</li>
+          <li>weight: int</li>
+          <li>descriptions: String</li>
+          <li>category: String</li>
+          <li>createDate: Date</li>
+          <li>stock: int</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

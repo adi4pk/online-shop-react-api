@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Produse — Online Shop</title>
+  <link rel="stylesheet" href="../shared.css" />
+</head>
+<body>
+
+  <div class="mockup-bar">
+    <div><a href="index.html">&larr; Toate paginile</a></div>
+    <div class="mockup-route">/products</div>
+    <div>Click pe produs &rarr; <a href="product-detail.html">ProductDetailPage</a></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="products.html" class="navbar-brand"><div class="brand-icon">S</div> OnlineShop</a>
+      <ul class="navbar-links">
+        <li><a href="products.html" class="active">Produse</a></li>
+        <li><a href="cart.html">Cos</a></li>
+        <li><a href="account-orders.html">Comenzile mele</a></li>
+      </ul>
+      <div class="navbar-actions">
+        <a href="cart.html" class="cart-btn">&#128722; Cos <span class="cart-badge">3</span></a>
+        <div class="user-menu"><div class="user-avatar">AP</div> Andrei P.</div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container section">
+    <div class="section-title">Produse</div>
+    <div class="section-subtitle">Exploreaza catalogul nostru de produse</div>
+
+    <div class="products-toolbar">
+      <div class="search-box">
+        <span>&#128269;</span>
+        <input type="text" id="product-search" placeholder="Cauta produse..." />
+      </div>
+      <div class="filter-group">
+        <select id="filter-category">
+          <option>Toate categoriile</option>
+          <option>Electronics</option>
+          <option>Clothing</option>
+          <option>Home</option>
+          <option>Sports</option>
+        </select>
+        <select>
+          <option>Sorteaza: Recomandate</option>
+          <option>Pret: mic la mare</option>
+          <option>Pret: mare la mic</option>
+          <option>Cele mai noi</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Results count + clear filters bar (visible when searching) -->
+    <div id="results-info" style="display: none; font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+      <span id="results-count"></span>
+      <button id="clear-filters" class="btn btn-ghost btn-sm" style="margin-left: 8px;">Sterge filtrele</button>
+    </div>
+
+    <!-- Empty / no-results state -->
+    <div id="no-results" class="empty-state" style="display: none;">
+      <div class="empty-state-icon">&#128269;</div>
+      <h2>Niciun produs gasit</h2>
+      <p>Nu am gasit produse care sa corespunda cautarii tale. Incearca sa schimbi termenii sau sterge filtrele.</p>
+      <button class="btn btn-primary" id="reset-filters-btn">Sterge filtrele</button>
+    </div>
+
+    <div class="products-grid" id="products-grid">
+      <a href="product-detail.html" class="product-card" data-name="Laptop ProMax 15" data-cat="Electronics">
+        <div class="product-img">&#128187;<span class="category-tag">Electronics</span><span class="stock-tag in-stock">In stoc</span></div>
+        <div class="product-info"><div class="product-name">Laptop ProMax 15</div><div class="product-sku">SKU-EL-001</div><div class="product-desc">Laptop performant cu procesor ultima generatie, 16GB RAM, 512GB SSD.</div></div>
+        <div class="product-footer"><div class="product-price">4,599 <span class="currency">RON</span></div><div class="product-weight">2,100 g</div></div>
+      </a>
+      <a href="product-detail.html" class="product-card" data-name="Monitor UltraWide 34" data-cat="Electronics">
+        <div class="product-img">&#128424;<span class="category-tag">Electronics</span><span class="stock-tag in-stock">In stoc</span></div>
+        <div class="product-info"><div class="product-name">Monitor UltraWide 34"</div><div class="product-sku">SKU-EL-002</div><div class="product-desc">Monitor curbat IPS, rezolutie WQHD, timp de raspuns 1ms.</div></div>
+        <div class="product-footer"><div class="product-price">2,199 <span class="currency">RON</span></div><div class="product-weight">6,800 g</div></div>
+      </a>
+      <a href="product-detail.html" class="product-card" data-name="Tastatura Mecanica RGB" data-cat="Electronics">
+        <div class="product-img">&#9000;<span class="category-tag">Electronics</span><span class="stock-tag in-stock">In stoc</span></div>
+        <div class="product-info"><div class="product-name">Tastatura Mecanica RGB</div><div class="product-sku">SKU-EL-003</div><div class="product-desc">Tastatura mecanica cu switch-uri Cherry MX, iluminare RGB.</div></div>
+        <div class="product-footer"><div class="product-price">349 <span class="currency">RON</span></div><div class="product-weight">820 g</div></div>
+      </a>
+      <a href="product-detail.html" class="product-card" data-name="Tricou Sport Dry-Fit" data-cat="Clothing">
+        <div class="product-img">&#128085;<span class="category-tag">Clothing</span><span class="stock-tag low-stock">Stoc scazut</span></div>
+        <div class="product-info"><div class="product-name">Tricou Sport Dry-Fit</div><div class="product-sku">SKU-CL-010</div><div class="product-desc">Material respirabil, uscare rapida, ideal pentru antrenament.</div></div>
+        <div class="product-footer"><div class="product-price">89 <span class="currency">RON</span></div><div class="product-weight">180 g</div></div>
+      </a>
+      <a href="product-detail.html" class="product-card" data-name="Lampa LED Birou" data-cat="Home">
+        <div class="product-img">&#128161;<span class="category-tag">Home</span><span class="stock-tag out-of-stock">Indisponibil</span></div>
+        <div class="product-info"><div class="product-name">Lampa LED Birou</div><div class="product-sku">SKU-HM-020</div><div class="product-desc">Lampa LED cu 3 moduri de iluminare, brat flexibil, port USB.</div></div>
+        <div class="product-footer"><div class="product-price">149 <span class="currency">RON</span></div><div class="product-weight">950 g</div></div>
+      </a>
+      <a href="product-detail.html" class="product-card" data-name="Minge Fotbal Pro" data-cat="Sports">
+        <div class="product-img">&#9917;<span class="category-tag">Sports</span><span class="stock-tag in-stock">In stoc</span></div>
+        <div class="product-info"><div class="product-name">Minge Fotbal Pro</div><div class="product-sku">SKU-SP-015</div><div class="product-desc">Minge profesionala FIFA Quality Pro, marime 5.</div></div>
+        <div class="product-footer"><div class="product-price">120 <span class="currency">RON</span></div><div class="product-weight">430 g</div></div>
+      </a>
+      <a href="product-detail.html" class="product-card" data-name="Geaca Iarna Puf" data-cat="Clothing">
+        <div class="product-img">&#129507;<span class="category-tag">Clothing</span><span class="stock-tag in-stock">In stoc</span></div>
+        <div class="product-info"><div class="product-name">Geaca Iarna Puf</div><div class="product-sku">SKU-CL-011</div><div class="product-desc">Geaca cu puf natural, rezistenta la apa, captuseala termica.</div></div>
+        <div class="product-footer"><div class="product-price">599 <span class="currency">RON</span></div><div class="product-weight">750 g</div></div>
+      </a>
+      <a href="product-detail.html" class="product-card" data-name="Set Prosoape Bumbac" data-cat="Home">
+        <div class="product-img">&#127968;<span class="category-tag">Home</span><span class="stock-tag low-stock">Stoc scazut</span></div>
+        <div class="product-info"><div class="product-name">Set Prosoape Bumbac</div><div class="product-sku">SKU-HM-021</div><div class="product-desc">Set 4 prosoape 100% bumbac egipt, 600gsm.</div></div>
+        <div class="product-footer"><div class="product-price">79 <span class="currency">RON</span></div><div class="product-weight">600 g</div></div>
+      </a>
+    </div>
+
+    <div class="pagination">
+      <button disabled>&laquo;</button>
+      <button disabled>&lsaquo;</button>
+      <button class="active">1</button>
+      <button>2</button>
+      <button>3</button>
+      <button>...</button>
+      <button>13</button>
+      <button>&rsaquo;</button>
+      <button>&raquo;</button>
+    </div>
+  </div>
+
+  <footer class="footer"><div class="footer-inner"><span>2026 OnlineShop</span><ul class="footer-links"><li><a href="#">Termeni</a></li><li><a href="#">Confidentialitate</a></li><li><a href="#">Contact</a></li></ul></div></footer>
+
+  <script src="../shared.js"></script>
+  <script>
+    // Live filtering by name + category — purely client-side for the mockup.
+    const search = document.getElementById("product-search");
+    const cat = document.getElementById("filter-category");
+    const cards = Array.from(document.querySelectorAll(".product-card"));
+    const grid = document.getElementById("products-grid");
+    const noResults = document.getElementById("no-results");
+    const resultsInfo = document.getElementById("results-info");
+    const resultsCount = document.getElementById("results-count");
+    const clearBtn = document.getElementById("clear-filters");
+    const resetBtn = document.getElementById("reset-filters-btn");
+
+    function applyFilters() {
+      const term = search.value.trim().toLowerCase();
+      const category = cat.value === "Toate categoriile" ? "" : cat.value;
+      let visible = 0;
+      cards.forEach((c) => {
+        const nameMatch = !term || c.dataset.name.toLowerCase().includes(term);
+        const catMatch = !category || c.dataset.cat === category;
+        const show = nameMatch && catMatch;
+        c.style.display = show ? "" : "none";
+        if (show) visible++;
+      });
+      const filtering = term || category;
+      noResults.style.display = (filtering && visible === 0) ? "block" : "none";
+      grid.style.display = visible === 0 ? "none" : "";
+      if (filtering) {
+        resultsInfo.style.display = "block";
+        resultsCount.textContent = visible + " produse gasite" + (term ? ' pentru "' + term + '"' : "");
+      } else {
+        resultsInfo.style.display = "none";
+      }
+    }
+    function reset() { search.value = ""; cat.selectedIndex = 0; applyFilters(); }
+    search.addEventListener("input", applyFilters);
+    cat.addEventListener("change", applyFilters);
+    clearBtn.addEventListener("click", reset);
+    resetBtn.addEventListener("click", reset);
+  </script>
+
+</body>
+</html>

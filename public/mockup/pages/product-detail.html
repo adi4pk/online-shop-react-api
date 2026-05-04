@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laptop ProMax 15 — Online Shop</title>
+  <link rel="stylesheet" href="../shared.css" />
+</head>
+<body>
+
+  <div class="mockup-bar">
+    <div><a href="index.html">&larr; Toate paginile</a></div>
+    <div class="mockup-route">/products/:id</div>
+    <div><a href="products.html">Produse</a> &rarr; Detaliu &rarr; <a href="cart.html">Cos</a></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="products.html" class="navbar-brand"><div class="brand-icon">S</div> OnlineShop</a>
+      <ul class="navbar-links">
+        <li><a href="products.html" class="active">Produse</a></li>
+        <li><a href="cart.html">Cos</a></li>
+        <li><a href="account-orders.html">Comenzile mele</a></li>
+      </ul>
+      <div class="navbar-actions">
+        <a href="cart.html" class="cart-btn">&#128722; Cos <span class="cart-badge">3</span></a>
+        <div class="user-menu"><div class="user-avatar">AP</div> Andrei P.</div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div style="padding-top: 16px; margin-bottom: 8px;">
+      <a href="products.html" class="btn btn-ghost btn-sm">&larr; Inapoi la produse</a>
+    </div>
+
+    <div class="product-detail">
+      <div class="product-detail-img">&#128187;</div>
+      <div class="product-detail-info">
+        <h1>Laptop ProMax 15</h1>
+        <div class="product-detail-meta">
+          <span><strong>SKU:</strong> SKU-EL-001</span>
+          <span><strong>Categorie:</strong> Electronics</span>
+          <span class="badge badge-success">In stoc (45)</span>
+        </div>
+        <div class="product-detail-price">4,599 <span class="currency">RON</span></div>
+        <div class="product-detail-desc">Laptop performant cu procesor ultima generatie, 16GB RAM, 512GB SSD. Ecran IPS Full HD de 15.6 inch, ideal pentru programare si design. Baterie de lunga durata si constructie metalica premium.</div>
+
+        <div class="specs">
+          <div class="spec-row"><span class="spec-key">Greutate</span><span class="spec-value">2,100 g</span></div>
+          <div class="spec-row"><span class="spec-key">Categorie</span><span class="spec-value">Electronics</span></div>
+          <div class="spec-row"><span class="spec-key">SKU</span><span class="spec-value" style="font-family: monospace;">SKU-EL-001</span></div>
+          <div class="spec-row"><span class="spec-key">Data adaugare</span><span class="spec-value">15 Ianuarie 2024</span></div>
+          <div class="spec-row"><span class="spec-key">Stoc disponibil</span><span class="spec-value">45 bucati</span></div>
+        </div>
+
+        <div style="margin-bottom: 12px; font-size: 14px; font-weight: 500;">Cantitate</div>
+        <div class="quantity-selector">
+          <button id="qty-down" type="button" aria-label="Scade">-</button>
+          <input id="qty-input" type="number" value="1" min="1" max="45" />
+          <button id="qty-up" type="button" aria-label="Creste">+</button>
+        </div>
+        <div class="action-row">
+          <button class="btn btn-primary btn-lg" id="add-to-cart">&#128722; Adauga in cos</button>
+          <button class="btn btn-outline btn-lg" id="add-to-favs">&#9825; Favorite</button>
+        </div>
+
+        <p style="margin-top: 16px; font-size: 13px; color: var(--text-secondary);">
+          🚚 Livrare gratuita pentru comenzi peste 200 RON &nbsp;·&nbsp; ↩ Retur gratuit 30 zile
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer"><div class="footer-inner"><span>2026 OnlineShop</span><ul class="footer-links"><li><a href="#">Termeni</a></li><li><a href="#">Confidentialitate</a></li></ul></div></footer>
+
+  <script src="../shared.js"></script>
+  <script>
+    const qty = document.getElementById("qty-input");
+    document.getElementById("qty-down").addEventListener("click", () => {
+      qty.value = Math.max(1, (parseInt(qty.value, 10) || 1) - 1);
+    });
+    document.getElementById("qty-up").addEventListener("click", () => {
+      qty.value = Math.min(45, (parseInt(qty.value, 10) || 1) + 1);
+    });
+    qty.addEventListener("input", () => {
+      const v = parseInt(qty.value, 10);
+      if (isNaN(v) || v < 1) qty.value = 1;
+      else if (v > 45) { qty.value = 45; showToast({ type: "warning", title: "Stoc maxim", message: "Doar 45 bucati disponibile in stoc." }); }
+    });
+
+    document.getElementById("add-to-cart").addEventListener("click", () => {
+      const n = parseInt(qty.value, 10) || 1;
+      const badge = document.querySelector(".cart-badge");
+      updateCartBadge((parseInt(badge.textContent, 10) || 0) + n);
+      showToast({
+        type: "success",
+        title: "Adaugat in cos",
+        message: n + "× Laptop ProMax 15 — vezi cosul tau."
+      });
+    });
+
+    document.getElementById("add-to-favs").addEventListener("click", (e) => {
+      const btn = e.currentTarget;
+      const isFav = btn.classList.toggle("is-fav");
+      btn.innerHTML = isFav ? "♥ Adaugat la favorite" : "♡ Favorite";
+      showToast({
+        type: isFav ? "success" : "info",
+        title: isFav ? "Adaugat la favorite" : "Sters de la favorite",
+        duration: 2000
+      });
+    });
+  </script>
+
+</body>
+</html>

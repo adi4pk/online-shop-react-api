@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout — Online Shop</title>
+  <link rel="stylesheet" href="../shared.css" />
+</head>
+<body>
+
+  <div class="mockup-bar">
+    <div><a href="index.html">&larr; Toate paginile</a></div>
+    <div class="mockup-route">/checkout</div>
+    <div><a href="cart.html">Cos</a> &rarr; Checkout &rarr; <a href="confirmation.html">Confirmare</a></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="products.html" class="navbar-brand"><div class="brand-icon">S</div> OnlineShop</a>
+      <ul class="navbar-links">
+        <li><a href="products.html">Produse</a></li>
+        <li><a href="cart.html" class="active">Cos</a></li>
+        <li><a href="account-orders.html">Comenzile mele</a></li>
+      </ul>
+      <div class="navbar-actions">
+        <div class="user-menu"><div class="user-avatar">AP</div> Andrei P.</div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="section" style="padding-bottom: 0;">
+      <div class="section-title">Finalizeaza comanda</div>
+      <div class="section-subtitle">Completeaza datele de livrare si plata</div>
+    </div>
+
+    <!-- Step indicator -->
+    <div class="stepper">
+      <div class="stepper-step is-done">
+        <div class="stepper-circle">✓</div>
+        <div class="stepper-label">Cos</div>
+      </div>
+      <div class="stepper-connector"></div>
+      <div class="stepper-step is-active">
+        <div class="stepper-circle">2</div>
+        <div class="stepper-label">Livrare &amp; plata</div>
+      </div>
+      <div class="stepper-connector"></div>
+      <div class="stepper-step">
+        <div class="stepper-circle">3</div>
+        <div class="stepper-label">Confirmare</div>
+      </div>
+    </div>
+
+    <form id="checkout-form" novalidate>
+      <div class="checkout-layout">
+        <div>
+          <div class="checkout-section">
+            <h3>Date de contact</h3>
+            <div class="form-row">
+              <div class="form-group"><label class="form-label" for="co-name">Nume Complet <span class="required">*</span></label><input id="co-name" class="form-input" type="text" value="Andrei Popescu" required /></div>
+              <div class="form-group"><label class="form-label" for="co-email">Email <span class="required">*</span></label><input id="co-email" class="form-input" type="email" value="andrei.popescu@email.ro" required /></div>
+            </div>
+            <div class="form-group"><label class="form-label" for="co-phone">Telefon <span class="required">*</span></label><input id="co-phone" class="form-input" type="tel" value="0722 111 222" required /></div>
+          </div>
+
+          <div class="checkout-section">
+            <h3>Adresa de livrare</h3>
+            <div class="form-group"><label class="form-label" for="co-addr">Adresa completa <span class="required">*</span></label><input id="co-addr" class="form-input" type="text" value="Str. Victoriei 45, Bucuresti" required /></div>
+            <div class="form-row">
+              <div class="form-group"><label class="form-label" for="co-city">Oras <span class="required">*</span></label><input id="co-city" class="form-input" type="text" value="Bucuresti" required /></div>
+              <div class="form-group"><label class="form-label" for="co-country">Tara <span class="required">*</span></label><select id="co-country" class="form-select" required><option selected>Romania</option><option>Germania</option><option>Franta</option></select></div>
+            </div>
+            <div class="form-group"><label class="form-checkbox"><input type="checkbox" checked /> Adresa de facturare este aceeasi cu adresa de livrare</label></div>
+          </div>
+
+          <div class="checkout-section">
+            <h3>Metoda de plata</h3>
+            <div class="form-group">
+              <label class="form-checkbox" style="margin-bottom: 10px;"><input type="radio" name="payment" id="pay-card" checked /> Card bancar</label>
+              <label class="form-checkbox" style="margin-bottom: 10px;"><input type="radio" name="payment" id="pay-cod" /> Ramburs la livrare</label>
+              <label class="form-checkbox"><input type="radio" name="payment" id="pay-bank" /> Transfer bancar</label>
+            </div>
+
+            <div id="card-fields">
+              <div class="form-group"><label class="form-label" for="cc-num">Numar Card <span class="required">*</span></label><input id="cc-num" class="form-input" type="text" inputmode="numeric" maxlength="19" placeholder="1234 5678 9012 3456" autocomplete="cc-number" /></div>
+              <div class="form-row">
+                <div class="form-group"><label class="form-label" for="cc-exp">Data Expirare <span class="required">*</span></label><input id="cc-exp" class="form-input" type="text" inputmode="numeric" maxlength="5" placeholder="MM/AA" autocomplete="cc-exp" /></div>
+                <div class="form-group"><label class="form-label" for="cc-cvv">CVV <span class="required">*</span></label><input id="cc-cvv" class="form-input" type="text" inputmode="numeric" maxlength="4" placeholder="123" autocomplete="cc-csc" /></div>
+              </div>
+              <p style="font-size: 12px; color: var(--text-light); display: flex; align-items: center; gap: 6px;">
+                🔒 Plata securizata SSL — datele cardului nu sunt stocate.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="cart-summary">
+            <h3>Sumar comanda</h3>
+            <div class="order-lines">
+              <div class="order-line"><span>Laptop ProMax 15 x1</span><span>4,599 RON</span></div>
+              <div class="order-line"><span>Tricou Sport Dry-Fit x2</span><span>178 RON</span></div>
+              <div class="order-line"><span>Minge Fotbal Pro x1</span><span>120 RON</span></div>
+            </div>
+            <div class="summary-row"><span class="label">Subtotal</span><span>4,897 RON</span></div>
+            <div class="summary-row"><span class="label">Livrare</span><span style="color: var(--success); font-weight: 500;">Gratuita</span></div>
+            <div class="summary-row"><span class="label">TVA (19%)</span><span>930 RON</span></div>
+            <div class="summary-row total"><span>Total</span><span>5,827 RON</span></div>
+            <button type="submit" id="place-order" class="btn btn-primary btn-block btn-lg" style="margin-top: 20px;">Plaseaza comanda</button>
+            <a href="cart.html" class="btn btn-ghost btn-block" style="margin-top: 8px;">Inapoi la cos</a>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <footer class="footer"><div class="footer-inner"><span>2026 OnlineShop</span><ul class="footer-links"><li><a href="#">Termeni</a></li></ul></div></footer>
+
+  <script src="../shared.js"></script>
+  <script>
+    // Card number mask: 4-digit groups
+    const ccNum = document.getElementById("cc-num");
+    ccNum.addEventListener("input", () => {
+      const digits = ccNum.value.replace(/\D/g, "").slice(0, 16);
+      ccNum.value = digits.replace(/(\d{4})(?=\d)/g, "$1 ");
+    });
+    // Expiry mask MM/YY
+    const ccExp = document.getElementById("cc-exp");
+    ccExp.addEventListener("input", () => {
+      let v = ccExp.value.replace(/\D/g, "").slice(0, 4);
+      if (v.length >= 3) v = v.slice(0, 2) + "/" + v.slice(2);
+      ccExp.value = v;
+    });
+    // CVV digits only
+    const ccCvv = document.getElementById("cc-cvv");
+    ccCvv.addEventListener("input", () => { ccCvv.value = ccCvv.value.replace(/\D/g, "").slice(0, 4); });
+
+    // Toggle card fields by payment method
+    const cardFields = document.getElementById("card-fields");
+    document.querySelectorAll("input[name=payment]").forEach((r) => {
+      r.addEventListener("change", () => {
+        cardFields.style.display = document.getElementById("pay-card").checked ? "" : "none";
+      });
+    });
+
+    // Submit with loading + redirect
+    const form = document.getElementById("checkout-form");
+    const btn = document.getElementById("place-order");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      // Light validation: required fields filled, card if selected
+      let firstInvalid = null;
+      form.querySelectorAll("[required]").forEach((el) => {
+        if (!el.value.trim()) {
+          el.classList.add("is-invalid");
+          if (!firstInvalid) firstInvalid = el;
+        } else {
+          el.classList.remove("is-invalid");
+        }
+      });
+      if (document.getElementById("pay-card").checked) {
+        [ccNum, ccExp, ccCvv].forEach((el) => {
+          if (!el.value.trim()) {
+            el.classList.add("is-invalid");
+            if (!firstInvalid) firstInvalid = el;
+          } else {
+            el.classList.remove("is-invalid");
+          }
+        });
+      }
+      if (firstInvalid) {
+        showToast({ type: "error", title: "Date incomplete", message: "Verifica campurile marcate cu rosu." });
+        firstInvalid.focus();
+        return;
+      }
+      btn.classList.add("is-loading");
+      btn.disabled = true;
+      setTimeout(() => { window.location.href = "confirmation.html"; }, 900);
+    });
+  </script>
+
+</body>
+</html>
