@@ -8,8 +8,10 @@ function ProductDetailPage(){
 
     return (
       <>
-        <p>&#128187;</p>
-        <p>sunt in produs</p>
+        <Link to={"/products/:id"}>
+          <p>&#128187;</p>
+          <p>sunt in produs</p>
+        </Link>
       </>
     );
 }

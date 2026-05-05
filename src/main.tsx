@@ -9,9 +9,16 @@ import ReactDOM from "react-dom/client";
 import "./styles/shared.css";
 
 import App from "./App";
+import { ToastProvider } from "./lib/toast";
+import { ConfirmProvider } from "./lib/confirm";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <App />
+    
+    <ToastProvider>
+      <ConfirmProvider>
+        <App />
+      </ConfirmProvider>
+    </ToastProvider>
   </React.StrictMode>,
 );
