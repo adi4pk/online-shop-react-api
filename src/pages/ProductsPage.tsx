@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
 import ProductDetailPage from "./ProductDetailPage";
+import { Link } from "react-router-dom";
+import AccountProfilePage from "./account/AccountProfilePage";
 
 function ProductsPage(){
 
@@ -11,6 +14,18 @@ function ProductsPage(){
             {id: 7, productImg: "&#129507", dataName: "Geaca Iarna Puf", categ: "Clothing", inStoc: true, SKU: "SKU-CL-011", descriere: "Geaca puf natural, rezistenta la apa, captuseala termica.", price: 599, currency: "RON", greutate: 750},
             {id: 8, productImg: "&#127968", dataName: "Set Prosoape Bumbac", categ: "Home", inStoc: true, SKU: "SKU-HM-021", descriere: "Set 4 prosoape 100% bumbac egipt, 600gsm.", price: 79, currency: "RON", greutate: 600}
         ];
+
+    const navigate = useNavigate();
+
+    let goToCart = () =>{
+      navigate('/cart');
+    }
+
+    let goToMyOrders = () =>{
+      navigate('/account/orders');
+    }
+
+    
     return (
       <>
         <div className="mockup-bar">
@@ -26,29 +41,34 @@ function ProductsPage(){
 
         <nav className="navbar">
           <div className="navbar-inner">
-            <a href="products.html" className="navbar-brand">
+            <Link to={"/ProductsPage"} className="navbar-brand">
               <div className="brand-icon">S</div> OnlineShop
-            </a>
+            </Link>
             <ul className="navbar-links">
               <li>
-                <a href="products.html" className="active">
+                <Link to={'/ProductsPage'} className="active">
                   Produse
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="cart.html">Cos</a>
+                <Link to={'/cart'}
+                >Cos</Link>
               </li>
               <li>
-                <a href="account-orders.html">Comenzile mele</a>
+                <Link to={'/account/orders'}
+                // onClick={() => goToMyOrders()}
+                >Comenzile mele</Link>
               </li>
             </ul>
             <div className="navbar-actions">
-              <a href="cart.html" className="cart-btn">
+              <Link to={'/cart'} className="cart-btn"
+              // onClick={() => goToCart()}
+              >
                 &#128722; Cos <span className="cart-badge">3</span>
-              </a>
-              <div className="user-menu">
+              </Link>
+              <Link to={'/account/profile'} className="user-menu">
                 <div className="user-avatar">AP</div> Andrei P.
-              </div>
+              </Link>
             </div>
           </div>
         </nav>
@@ -167,7 +187,7 @@ function ProductsPage(){
 
           <div className="products-grid" id="products-grid">
             {productsArr.map((produs) => (
-              <ProductDetailPage key={produs.id} produs={produs} />
+              <ProductDetailPage key={produs.id}/>
             ))}
           </div>
 

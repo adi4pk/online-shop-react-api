@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route  } from "react-router-dom"
 import { useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 
 function Login(){
 
@@ -30,13 +30,13 @@ function Login(){
               </a>
               <ul className="navbar-links">
                 <li>
-                  <a href="products.html">Produse</a>
+                  <Link to={'/*'}>Produse</Link>
                 </li>
               </ul>
               <div className="navbar-actions">
-                <a href="register.html" className="btn btn-sm btn-outline">
+                <Link to={'/register'} className="btn btn-sm btn-outline">
                   Inregistrare
-                </a>
+                </Link>
               </div>
             </div>
           </nav>

@@ -8,6 +8,8 @@ import CartPage from "@/pages/CartPage";
 import CheckoutPage from "@/pages/CheckoutPage";
 import ConfirmationPage from "@/pages/ConfirmationPage";
 import AccountOrdersPage from "@/pages/account/AccountOrdersPage";
+import AccountProfilePage from "@/pages/account/AccountProfilePage";
+import NotFoundPage from "@/pages/NotFoundPage";
 
 function AppRoutes(){
     return(
@@ -22,6 +24,8 @@ function AppRoutes(){
             <Route path="/checkout" element={<CheckoutPage/>}/>
             <Route path="/confirmation/:orderId" element={<ConfirmationPage/>}/>
             <Route path="/account/orders" element={<AccountOrdersPage/>}/>
+            <Route path="/account/profile" element={<AccountProfilePage/>}/>
+            <Route path="/*" element={<NotFoundPage/>}/>
         </Routes>
         </>
     )
