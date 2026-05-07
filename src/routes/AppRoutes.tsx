@@ -10,6 +10,7 @@ import ConfirmationPage from "@/pages/ConfirmationPage";
 import AccountOrdersPage from "@/pages/account/AccountOrdersPage";
 import AccountProfilePage from "@/pages/account/AccountProfilePage";
 import NotFoundPage from "@/pages/NotFoundPage";
+import AccountAddresses from "@/pages/account/AccountAddresses";
 
 function AppRoutes(){
     return(
@@ -25,6 +26,7 @@ function AppRoutes(){
             <Route path="/confirmation/:orderId" element={<ConfirmationPage/>}/>
             <Route path="/account/orders" element={<AccountOrdersPage/>}/>
             <Route path="/account/profile" element={<AccountProfilePage/>}/>
+            <Route path="/account/addresses" element={<AccountAddresses/>}/>
             <Route path="/*" element={<NotFoundPage/>}/>
         </Routes>
         </>

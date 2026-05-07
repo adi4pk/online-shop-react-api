@@ -3,6 +3,12 @@ import ProductDetailPage from "./ProductDetailPage";
 import { Link } from "react-router-dom";
 import AccountProfilePage from "./account/AccountProfilePage";
 
+import Navbar from "@/components/layout/Navbar";
+import MockupBar from "@/components/layout/Mockup";
+import Footer from "@/components/layout/Footer";
+
+
+
 function ProductsPage(){
 
         let productsArr = [{id: 1, productImg: "&#128187", dataName: "Laptop ProMax 15", categ: "Electronics", inStoc: true, SKU: "SKU-EL-001", descriere: "Laptop performant cu procesor ultima generatie, 16GB RAM, 512GB SSD.", price: 4.599, currency: "RON", greutate: 2.100},
@@ -28,50 +34,11 @@ function ProductsPage(){
     
     return (
       <>
-        <div className="mockup-bar">
-          <div>
-            <a href="index.html">&larr; Toate paginile</a>
-          </div>
-          <div className="mockup-route">/products</div>
-          <div>
-            Click pe produs &rarr;{" "}
-            <a href="product-detail.html">ProductDetailPage</a>
-          </div>
-        </div>
+       <MockupBar></MockupBar>
 
-        <nav className="navbar">
-          <div className="navbar-inner">
-            <Link to={"/ProductsPage"} className="navbar-brand">
-              <div className="brand-icon">S</div> OnlineShop
-            </Link>
-            <ul className="navbar-links">
-              <li>
-                <Link to={'/ProductsPage'} className="active">
-                  Produse
-                </Link>
-              </li>
-              <li>
-                <Link to={'/cart'}
-                >Cos</Link>
-              </li>
-              <li>
-                <Link to={'/account/orders'}
-                // onClick={() => goToMyOrders()}
-                >Comenzile mele</Link>
-              </li>
-            </ul>
-            <div className="navbar-actions">
-              <Link to={'/cart'} className="cart-btn"
-              // onClick={() => goToCart()}
-              >
-                &#128722; Cos <span className="cart-badge">3</span>
-              </Link>
-              <Link to={'/account/profile'} className="user-menu">
-                <div className="user-avatar">AP</div> Andrei P.
-              </Link>
-            </div>
-          </div>
-        </nav>
+        <Navbar>
+
+        </Navbar>
 
         <div className="container section">
           <div className="section-title">Produse</div>
@@ -204,22 +171,7 @@ function ProductsPage(){
           </div>
         </div>
 
-        <footer className="footer">
-          <div className="footer-inner">
-            <span>2026 OnlineShop</span>
-            <ul className="footer-links">
-              <li>
-                <a href="#">Termeni</a>
-              </li>
-              <li>
-                <a href="#">Confidentialitate</a>
-              </li>
-              <li>
-                <a href="#">Contact</a>
-              </li>
-            </ul>
-          </div>
-        </footer>
+        <Footer></Footer>
       </>
     );
 }
