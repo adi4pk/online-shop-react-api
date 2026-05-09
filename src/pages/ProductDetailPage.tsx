@@ -10,10 +10,9 @@ function ProductDetailPage(){
     return (
       <>
       
-        <Link to={"/products/:id"}>
+        
           <p>&#128187;</p>
           <p>sunt in produs</p>
-        </Link>
       </>
     );
 }

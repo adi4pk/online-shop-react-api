@@ -71,8 +71,8 @@ function CartPage(){
           <div className="summary-row"><span className="label">Livrare</span><span style={{color: "var(--success)", fontWeight: "500"}}>Gratuita</span></div>
           <div className="summary-row"><span className="label">TVA (19%)</span><span>930 RON</span></div>
           <div className="summary-row total"><span>Total</span><span>5,827 RON</span></div>
-          <a href="checkout.html" className="btn btn-primary btn-block btn-lg" style={{marginTop: "20px"}}>Finalizeaza comanda</a>
-          <a href="products.html" className="btn btn-ghost btn-block" style={{marginTop: "8px"}}>Continua cumparaturile</a>
+          <Link to={'/checkout'} className="btn btn-primary btn-block btn-lg" style={{marginTop: "20px"}}>Finalizeaza comanda</Link>
+          <Link to={'/ProductsPage'} className="btn btn-ghost btn-block" style={{marginTop: "8px"}}>Continua cumparaturile</Link>
           <p style={{fontSize: "12px", color: "var(--text-light)", textAlign: "center", marginTop: "14px"}}>
             🔒 Plata securizata. Datele cardului nu sunt stocate.
           </p>

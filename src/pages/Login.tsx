@@ -25,9 +25,9 @@ function Login(){
 
           <nav className="navbar">
             <div className="navbar-inner">
-              <a href="products.html" className="navbar-brand">
+              <Link to={'/ProductsPage'} className="navbar-brand">
                 <div className="brand-icon">S</div> OnlineShop
-              </a>
+              </Link>
               <ul className="navbar-links">
                 <li>
                   <Link to={'/*'}>Produse</Link>
@@ -95,15 +95,14 @@ function Login(){
                     </a>
                   </div>
                 </div>
-                <button
-                  type="submit"
-                // type="button"
-                  className="btn btn-primary btn-block btn-lg"
-                  id="login-submit"
-                  onClick={() => goToMainPage()}
-                >
-                  Autentificare
-                </button>
+                  {/* type="button" */}
+                {/* // type="button" */}
+                  
+                  {/* // id="login-submit" */}
+                  <Link to={'/ProductsPage'} className="btn btn-primary btn-block btn-lg" id="login-submit">Autentificare</Link>
+                  
+                
+                  
               </form>
 
               <div className="auth-divider">sau</div>
@@ -112,7 +111,7 @@ function Login(){
               </button>
 
               <div className="auth-footer">
-                Nu ai cont? <a href="register.html">Creeaza unul acum</a>
+                Nu ai cont? <Link to={'/register'} className="btn btn-sm btn-outline">Creeaza unul acum</Link>
               </div>
             </div>
           </div>

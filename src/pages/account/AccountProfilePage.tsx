@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import MockupBar from "@/components/layout/Mockup";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-
+import AccountSidebar from "@/components/layout/AccountSidebar";
 
 function AccountProfilePage() {
   return (
@@ -13,12 +13,7 @@ function AccountProfilePage() {
       <MockupBar></MockupBar>
       <Navbar></Navbar>
       <div className="account-layout">
-      <div className="account-sidebar">
-        <Link to={"/account/orders"}>&#128230; Comenzile mele</Link>
-        <Link to={"/account/profile"}>&#9786; Profil</Link>
-        <Link to={"/account/addresses"}>&#127968; Adrese</Link>
-        <Link to={"/login"} id="logout-link">&#10140; Deconectare</Link>
-      </div>
+      <AccountSidebar></AccountSidebar>
 
       <div className="account-card">
         <div className="account-card-header">

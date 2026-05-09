@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import ProductDetailPage from "./ProductDetailPage";
 import { Link } from "react-router-dom";
 import AccountProfilePage from "./account/AccountProfilePage";
+import Product from "./Product";
 
 import Navbar from "@/components/layout/Navbar";
 import MockupBar from "@/components/layout/Mockup";
@@ -154,7 +155,7 @@ function ProductsPage(){
 
           <div className="products-grid" id="products-grid">
             {productsArr.map((produs) => (
-              <ProductDetailPage key={produs.id}/>
+              <Product key={produs.id}/>
             ))}
           </div>
 
