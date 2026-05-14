@@ -1,5 +1,5 @@
-import type { ProductItem } from "./ProductItem";
 import { Link } from "react-router-dom";
+import type { ProductItem } from "./ProductItem";
 
 type ProductProps = {
   produs: ProductItem;
@@ -9,6 +9,7 @@ function Product({ produs }: ProductProps) {
   return (
     <Link to={`/products/${produs.id}`} className="product-card">
       <div className="product-img">
+        {produs.productImg}
         <span className="category-tag">{produs.categ}</span>
         <span className={`stock-tag ${produs.inStoc ? "in-stock" : "out-of-stock"}`}>
           {produs.inStoc ? "In stoc" : "Indisponibil"}

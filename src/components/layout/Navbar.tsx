@@ -5,12 +5,12 @@ function Navbar (){
         <>
             <nav className="navbar">
                       <div className="navbar-inner">
-                        <Link to={"/ProductsPage"} className="navbar-brand">
+                        <Link to={"/products"} className="navbar-brand">
                           <div className="brand-icon">S</div> OnlineShop
                         </Link>
                         <ul className="navbar-links">
                           <li>
-                            <Link to={'/ProductsPage'} className="active">
+                            <Link to={'/products'} className="active">
                               Produse
                             </Link>
                           </li>

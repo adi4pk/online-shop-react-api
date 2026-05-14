@@ -1,11 +1,7 @@
-function Home(){
+import { Navigate } from "react-router-dom";
 
-    return(
-        <>
-        </>
-    )
-
-
+function Home() {
+  return <Navigate to="/products" replace />;
 }
 
 export default Home;

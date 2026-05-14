@@ -1,20 +1,17 @@
-import type { ProductItem } from "./ProductItem";
-import { Link } from "react-router-dom";
-import Navbar from "@/components/layout/Navbar";
+import { useParams } from "react-router-dom";
 
-type ProductProps={
-    produs: ProductItem;
-}
-function ProductDetailPage(){
+function ProductDetailPage() {
+  const { id } = useParams<{ id: string }>();
 
-    return (
-      <>
-      
-        
-          <p>&#128187;</p>
-          <p>sunt in produs</p>
-      </>
-    );
+  return (
+    <div className="container section">
+      <div className="section-title">Detalii produs</div>
+      <p>ID produs: #{id}</p>
+      <p style={{ color: "var(--text-light)" }}>
+        Aici va veni descrierea completa a produsului, galeria de imagini, recenzii etc.
+      </p>
+    </div>
+  );
 }
 
 export default ProductDetailPage;

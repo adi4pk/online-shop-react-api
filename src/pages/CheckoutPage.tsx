@@ -1,15 +1,8 @@
-import MockupBar from "@/components/layout/Mockup";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-
 import { Link } from "react-router-dom";
 
-function CheckoutPage(){
+function CheckoutPage() {
 
     return (
-      <>
-        <MockupBar></MockupBar>
-        <Navbar></Navbar>
         <div className="container">
           <div className="section" style={{ paddingBottom: "0" }}>
             <div className="section-title">Finalizeaza comanda</div>
@@ -36,7 +29,7 @@ function CheckoutPage(){
             </div>
           </div>
 
-          <form id="checkout-form" noValidate>
+          <form id="checkout-form">
             <div className="checkout-layout">
               <div>
                 <div className="checkout-section">
@@ -50,7 +43,7 @@ function CheckoutPage(){
                         id="co-name"
                         className="form-input"
                         type="text"
-                        value="Andrei Popescu"
+                        defaultValue="Andrei Popescu"
                         required
                       />
                     </div>
@@ -62,7 +55,7 @@ function CheckoutPage(){
                         id="co-email"
                         className="form-input"
                         type="email"
-                        value="andrei.popescu@email.ro"
+                        defaultValue="andrei.popescu@email.ro"
                         required
                       />
                     </div>
@@ -75,7 +68,7 @@ function CheckoutPage(){
                       id="co-phone"
                       className="form-input"
                       type="tel"
-                      value="0722 111 222"
+                      defaultValue="0722 111 222"
                       required
                     />
                   </div>
@@ -91,7 +84,7 @@ function CheckoutPage(){
                       id="co-addr"
                       className="form-input"
                       type="text"
-                      value="Str. Victoriei 45, Bucuresti"
+                      defaultValue="Str. Victoriei 45, Bucuresti"
                       required
                     />
                   </div>
@@ -104,7 +97,7 @@ function CheckoutPage(){
                         id="co-city"
                         className="form-input"
                         type="text"
-                        value="Bucuresti"
+                        defaultValue="Bucuresti"
                         required
                       />
                     </div>
@@ -112,8 +105,8 @@ function CheckoutPage(){
                       <label className="form-label" htmlFor="co-country">
                         Tara <span className="required">*</span>
                       </label>
-                      <select id="co-country" className="form-select" required>
-                        <option selected>Romania</option>
+                      <select id="co-country" className="form-select" defaultValue="Romania" required>
+                        <option>Romania</option>
                         <option>Germania</option>
                         <option>Franta</option>
                       </select>
@@ -121,7 +114,7 @@ function CheckoutPage(){
                   </div>
                   <div className="form-group">
                     <label className="form-checkbox">
-                      <input type="checkbox" checked /> Adresa de facturare este
+                      <input type="checkbox" defaultChecked /> Adresa de facturare este
                       aceeasi cu adresa de livrare
                     </label>
                   </div>
@@ -138,7 +131,7 @@ function CheckoutPage(){
                         type="radio"
                         name="payment"
                         id="pay-card"
-                        checked
+                        defaultChecked
                       />{" "}
                       Card bancar
                     </label>
@@ -252,8 +245,8 @@ function CheckoutPage(){
                     <span>Total</span>
                     <span>5,827 RON</span>
                   </div>
-                  <Link to={'/confirmation/:orderId'}
-                    // type="button"
+                  <Link
+                    to={`/confirmation/${1007}`}
                     id="place-order"
                     className="btn btn-primary btn-block btn-lg"
                     style={{ marginTop: "20px" }}
@@ -272,8 +265,6 @@ function CheckoutPage(){
             </div>
           </form>
         </div>
-        <Footer></Footer>
-      </>
     );
 
 }
