@@ -17,7 +17,7 @@ termini, ca să-ți urmărești progresul.
 |------|-----------|--------|
 | 1. Project Setup & Foundations | 2 | ☐ |
 | 2. Layout & Navigation | 1 | ☐ |
-| 3. API & Type Layer | 3 | ☐ |
+| 3. API & Type Layer | 3 | ✅ |
 | 4. Authentication | 4 | ☐ |
 | 5. Product Catalog | 3 | ☐ |
 | 6. Shopping Cart | 4 | ☐ |
