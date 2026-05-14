@@ -10,11 +10,25 @@
 //     body: { email, password },
 //   });
 
-import { getAccessToken, getRefreshToken, saveTokens, clearTokens } from "./tokenStorage";
+import type { AuthResponse } from "@/types/api";
+import {
+  clearTokens,
+  getAccessToken,
+  getRefreshToken,
+  saveTokens,
+} from "./tokenStorage";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8082";
 
-export async function apiFetch<T>(path: string, options: any = {}): Promise<T> {
+export type ApiOptions = {
+  method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+  body?: unknown;
+  query?: { [key: string]: string | number };
+};
+
+type Headers = { [key: string]: string };
+
+export async function apiFetch<T>(path: string, options: ApiOptions = {}): Promise<T> {
   // 1. URL cu query params (daca exista)
   let url = BASE_URL + path;
   if (options.query) {
@@ -26,14 +40,14 @@ export async function apiFetch<T>(path: string, options: any = {}): Promise<T> {
   }
 
   // 2. Headers cu tokenul JWT (daca exista)
-  const headers: any = { "Content-Type": "application/json" };
+  const headers: Headers = { "Content-Type": "application/json" };
   const token = getAccessToken();
   if (token) headers.Authorization = "Bearer " + token;
 
-  const init = {
+  const init: RequestInit = {
     method: options.method || "GET",
     headers,
-    body: options.body ? JSON.stringify(options.body) : undefined,
+    body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
   };
 
   // 3. Trimite cererea
@@ -52,10 +66,10 @@ export async function apiFetch<T>(path: string, options: any = {}): Promise<T> {
   if (response.status === 204) return undefined as T;
   const data = await response.json();
   if (!response.ok) throw new Error(data?.message || "Eroare la cerere");
-  return data;
+  return data as T;
 }
 
-async function tryRefresh() {
+async function tryRefresh(): Promise<boolean> {
   const refreshToken = getRefreshToken();
   if (!refreshToken) return false;
 
@@ -70,7 +84,7 @@ async function tryRefresh() {
     return false;
   }
 
-  const data = await response.json();
+  const data: AuthResponse = await response.json();
   saveTokens(data.accessToken, data.refreshToken);
   return true;
 }

@@ -3,20 +3,20 @@
 const ACCESS_KEY = "online-shop.access-token";
 const REFRESH_KEY = "online-shop.refresh-token";
 
-export function getAccessToken() {
+export function getAccessToken(): string | null {
   return localStorage.getItem(ACCESS_KEY);
 }
 
-export function getRefreshToken() {
+export function getRefreshToken(): string | null {
   return localStorage.getItem(REFRESH_KEY);
 }
 
-export function saveTokens(accessToken: string, refreshToken: string) {
+export function saveTokens(accessToken: string, refreshToken: string): void {
   localStorage.setItem(ACCESS_KEY, accessToken);
   localStorage.setItem(REFRESH_KEY, refreshToken);
 }
 
-export function clearTokens() {
+export function clearTokens(): void {
   localStorage.removeItem(ACCESS_KEY);
   localStorage.removeItem(REFRESH_KEY);
 }
