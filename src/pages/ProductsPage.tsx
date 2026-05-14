@@ -155,7 +155,7 @@ function ProductsPage(){
 
           <div className="products-grid" id="products-grid">
             {productsArr.map((produs) => (
-              <Product key={produs.id}/>
+              <Product key={produs.id} produs={produs} />
             ))}
           </div>
 
