@@ -23,7 +23,7 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8082";
 export type ApiOptions = {
   method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   body?: unknown;
-  query?: { [key: string]: string | number };
+  query?: { [key: string]: string | number };   // [key: string ] ??
 };
 
 type Headers = { [key: string]: string };

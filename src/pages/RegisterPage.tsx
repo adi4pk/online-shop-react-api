@@ -1,7 +1,45 @@
 import { Link } from "react-router-dom";
+import type { FieldType } from "@/lib/validation";
+import type { ValidationRules } from "@/lib/validation";
+
+// import { validateField } from "@/lib/validation";
+import { validateAll } from "@/lib/validation";
+import { useField } from "@/lib/validation";
 
 function RegisterPage() {
 
+
+  interface FieldHookResult {
+  value: string;
+  /** True after the user has interacted (blur fired) — useful to gate showing the error. */
+  touched: boolean;
+  /** Error message after first interaction; null otherwise. */
+  error: string | null;
+  setValue: (next: string) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
+  onBlur: () => void;
+  /** Force-validate (use before submit to surface errors on untouched fields). */
+  validate: () => string | null;
+  reset: (to?: string) => void;
+}
+
+
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+}
+
+const name = useField("", { required: true});
+const email = useField("", {required: true, type: "email"});
+const phone = useField("", {required: true, type:"tel"})
+
+
+const password = useField("", {required: true, minLength: 8});
+const confirmPass = useField("", {
+  required: true,
+  custom: (pass) => (pass !== password.value ? "Parolele nu coincid" : null),
+});
+
+const tara = useField("", { required: true, type: "text"});
 
   return (
     <>
@@ -24,7 +62,11 @@ function RegisterPage() {
                 placeholder="ex: Ion Popescu"
                 required
                 autoComplete="name"
+                value={name.value}
+                onChange={name.onChange}
+                onBlur={name.onBlur}
               />
+              {name.error && <div className="error">{name.error}</div>}
             </div>
             <div className="form-row">
               <div className="form-group">
@@ -38,6 +80,9 @@ function RegisterPage() {
                   placeholder="email@exemplu.ro"
                   required
                   autoComplete="email"
+                  value={email.value}
+                  onChange={email.onChange}
+                  onBlur={email.onBlur}
                 />
               </div>
               <div className="form-group">
@@ -51,6 +96,9 @@ function RegisterPage() {
                   placeholder="0722 123 456"
                   required
                   autoComplete="tel"
+                  value={phone.value}
+                  onChange={phone.onChange}
+                  onBlur={phone.onBlur}
                 />
               </div>
             </div>
@@ -67,6 +115,9 @@ function RegisterPage() {
                     placeholder="Minim 8 caractere"
                     required
                     autoComplete="new-password"
+                    value={password.value}
+                    onChange={password.onChange}
+                    onBlur={password.onBlur}
                   />
                   <button
                     type="button"
@@ -98,6 +149,9 @@ function RegisterPage() {
                     placeholder="Repeta parola"
                     required
                     autoComplete="new-password"
+                    value={confirmPass.value}
+                    onChange={confirmPass.onChange}
+                    onBlur={confirmPass.onBlur}
                   />
                   <button
                     type="button"
@@ -113,7 +167,8 @@ function RegisterPage() {
               <label className="form-label" htmlFor="reg-country">
                 Tara <span className="required">*</span>
               </label>
-              <select className="form-select" id="reg-country" required>
+              <select className="form-select" id="reg-country" required
+              value={tara.value} onChange={tara.onChange} onBlur={tara.onBlur}>
                 <option value="">Selecteaza tara</option>
                 <option>Romania</option>
                 <option>Germania</option>
@@ -155,8 +210,10 @@ function RegisterPage() {
             </div>
             <button
               type="submit"
+              // type="button"
               className="btn btn-primary btn-block btn-lg"
               id="reg-submit"
+              // onClick={() => handleSubmit}/
             >
               Creeaza Contul
             </button>
