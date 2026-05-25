@@ -5,52 +5,81 @@ import type { ValidationRules } from "@/lib/validation";
 // import { validateField } from "@/lib/validation";
 import { validateAll } from "@/lib/validation";
 import { useField } from "@/lib/validation";
+import { useState } from "react";
+
+import type { RegisterRequest } from "@/types/api";
+import { register } from "@/api/auth";
+import type { AuthResponse } from "@/types/api";
 
 function RegisterPage() {
 
 
-  interface FieldHookResult {
-  value: string;
-  /** True after the user has interacted (blur fired) — useful to gate showing the error. */
-  touched: boolean;
-  /** Error message after first interaction; null otherwise. */
-  error: string | null;
-  setValue: (next: string) => void;
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
-  onBlur: () => void;
-  /** Force-validate (use before submit to surface errors on untouched fields). */
-  validate: () => string | null;
-  reset: (to?: string) => void;
-}
 
+const name = useField("", { required: true, type: "name"});
+  //name = un obiect cu proprietatile lui FieldHookResult, i.e. value, touched, error etc...
 
-const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-}
-
-const name = useField("", { required: true});
 const email = useField("", {required: true, type: "email"});
-const phone = useField("", {required: true, type:"tel"})
+const phone = useField("", {required: true, type:"tel", minLength: 10})
 
 
 const password = useField("", {required: true, minLength: 8});
 const confirmPass = useField("", {
   required: true,
-  custom: (pass) => (pass !== password.value ? "Parolele nu coincid" : null),
+  custom: (pass) => {
+//(pass !== password.value ? "Parolele nu coincid" : null)
+
+  if(pass!==password.value){
+
+     return "parolele nu coincid";
+  }   
+    return null;
+  },
 });
 
-const tara = useField("", { required: true, type: "text"});
+const country = useField("", { required: true, type: "country"});
+const adresa_livrare = useField("", { required: true, type: "address"});
+const adresa_facturare = useField("", { required: true, type: "address"});
+// const termeni = useField("")
+
+
+const [checkedField, setCheckedField] = useState(Boolean);
+
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const fieldsArr = validateAll([name, email, phone, password, confirmPass, country, adresa_livrare, adresa_facturare]);
+
+    // if (!fieldsArr) return;
+
+    let body: RegisterRequest ={
+      email: String(email),
+      password: String(password),
+      fullName: String(name),
+      billingAddress: String(adresa_facturare),
+      defaultShippingAddress: String(adresa_livrare),
+      country: String(country),
+      phone: String(phone),
+    }
+
+    register(body);
+  }
+
+
 
   return (
     <>
       <div className="auth-wrapper">
         <div className="auth-card auth-card--wide">
           <div className="auth-header">
-            <h1>Creeaza un cont</h1>
+            <h1>Creeaza un cont</h1>  
             <p>Completeaza datele pentru a-ti crea contul</p>
           </div>
 
-          <form id="register-form" noValidate>
+          <form 
+          id="register-form" 
+          noValidate
+          onSubmit={handleSubmit}
+          >
             <div className="form-group">
               <label className="form-label" htmlFor="reg-name">
                 Nume Complet <span className="required">*</span>
@@ -61,6 +90,7 @@ const tara = useField("", { required: true, type: "text"});
                 type="text"
                 placeholder="ex: Ion Popescu"
                 required
+                
                 autoComplete="name"
                 value={name.value}
                 onChange={name.onChange}
@@ -84,6 +114,7 @@ const tara = useField("", { required: true, type: "text"});
                   onChange={email.onChange}
                   onBlur={email.onBlur}
                 />
+                {email.error && <div className="error">{email.error}</div>}
               </div>
               <div className="form-group">
                 <label className="form-label" htmlFor="reg-phone">
@@ -100,6 +131,7 @@ const tara = useField("", { required: true, type: "text"});
                   onChange={phone.onChange}
                   onBlur={phone.onBlur}
                 />
+                {phone.error && <div className="error">{phone.error}</div>}
               </div>
             </div>
             <div className="form-row">
@@ -136,7 +168,10 @@ const tara = useField("", { required: true, type: "text"});
                 <div className="password-meter-label">
                   Foloseste litere mari, cifre si simboluri.
                 </div>
+                {password.error && <div>{password.error}</div>}
+
               </div>
+              
               <div className="form-group">
                 <label className="form-label" htmlFor="reg-pass2">
                   Confirma Parola <span className="required">*</span>
@@ -153,6 +188,9 @@ const tara = useField("", { required: true, type: "text"});
                     onChange={confirmPass.onChange}
                     onBlur={confirmPass.onBlur}
                   />
+
+
+                  
                   <button
                     type="button"
                     data-toggle-password="reg-pass2"
@@ -161,19 +199,23 @@ const tara = useField("", { required: true, type: "text"});
                     👁
                   </button>
                 </div>
+                {confirmPass.error && <div>{confirmPass.error}</div>}
               </div>
+              
             </div>
             <div className="form-group">
               <label className="form-label" htmlFor="reg-country">
                 Tara <span className="required">*</span>
               </label>
               <select className="form-select" id="reg-country" required
-              value={tara.value} onChange={tara.onChange} onBlur={tara.onBlur}>
-                <option value="">Selecteaza tara</option>
-                <option>Romania</option>
-                <option>Germania</option>
-                <option>Franta</option>
+              value={country.value} onChange={country.onChange} onBlur={country.onBlur}>
+                <option value="none">Selecteaza tara</option>
+                <option value="RO">Romania</option>
+                <option value="GER">Germania</option>
+                <option value="FR">Franta</option>
               </select>
+
+              {country.error && <div className="error">{country.error}</div>}
             </div>
             <div className="form-group">
               <label className="form-label" htmlFor="reg-billing">
@@ -185,6 +227,7 @@ const tara = useField("", { required: true, type: "text"});
                 type="text"
                 placeholder="Strada, numar, oras, cod postal"
                 required
+                
               />
             </div>
             <div className="form-group">
@@ -197,23 +240,31 @@ const tara = useField("", { required: true, type: "text"});
                 type="text"
                 placeholder="Strada, numar, oras, cod postal"
                 required
+                value={adresa_livrare.value}
+                onChange={adresa_livrare.onChange}
+                onBlur={adresa_livrare.onBlur}
               />
+            {adresa_livrare.error && <div className="error">{adresa_livrare.error}</div>}
+
               <span className="form-hint">
                 Poate fi aceeasi cu adresa de facturare
               </span>
+              {/* {adresa_facturare.error && <div className="error">{adresa_facturare.error}</div>} */}
             </div>
             <div className="form-group">
               <label className="form-checkbox">
-                <input type="checkbox" id="reg-tos" /> Sunt de acord cu{" "}
+                <input type="checkbox" id="reg-tos" 
+                onChange={(e) => setCheckedField(e.target.checked)}/> Sunt de acord cu{" "}
                 <a href="#">Termenii si Conditiile</a>
               </label>
+              {(checkedField) ?
+              "" : "Termenii trebuiesc acceptati."}
             </div>
             <button
               type="submit"
               // type="button"
               className="btn btn-primary btn-block btn-lg"
               id="reg-submit"
-              // onClick={() => handleSubmit}/
             >
               Creeaza Contul
             </button>

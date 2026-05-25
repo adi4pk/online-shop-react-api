@@ -1,11 +1,24 @@
 import { useNavigate, Link } from "react-router-dom";
+import { login } from "@/api/auth";
+import type { LoginRequest } from "@/types/api";
+import { useState } from "react";
 
 function Login() {
   const navigate = useNavigate();
 
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     navigate("/products");
+
+    let loginBody: LoginRequest={
+      email: email,
+      password: pass,
+    }
+    
+    login(loginBody);
   };
 
   return (
@@ -28,6 +41,7 @@ function Login() {
               placeholder="email@exemplu.ro"
               required
               autoComplete="email"
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
@@ -42,6 +56,7 @@ function Login() {
               placeholder="Introdu parola"
               required
               autoComplete="current-password"
+              onChange={(e) => setPass(e.target.value)}
             />
           </div>
 
