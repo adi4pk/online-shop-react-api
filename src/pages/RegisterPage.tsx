@@ -39,10 +39,10 @@ const confirmPass = useField("", {
 const country = useField("", { required: true, type: "country"});
 const adresa_livrare = useField("", { required: true, type: "address"});
 const adresa_facturare = useField("", { required: true, type: "address"});
-// const termeni = useField("")
+const isCheckedTermeni = useField(false, {required: true, type: "termeni"});
 
 
-const [checkedField, setCheckedField] = useState(Boolean);
+const [checkedField, setCheckedField] = useState(true);
 
 const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -52,13 +52,13 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     // if (!fieldsArr) return;
 
     let body: RegisterRequest ={
-      email: String(email),
-      password: String(password),
-      fullName: String(name),
-      billingAddress: String(adresa_facturare),
-      defaultShippingAddress: String(adresa_livrare),
-      country: String(country),
-      phone: String(phone),
+      email: String(email.value),
+      password: String(password.value),
+      fullName: String(name.value),
+      billingAddress: String(adresa_facturare.value),
+      defaultShippingAddress: String(adresa_livrare.value),
+      country: String(country.value),
+      phone: String(phone.value),
     }
 
     register(body);
@@ -71,15 +71,11 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       <div className="auth-wrapper">
         <div className="auth-card auth-card--wide">
           <div className="auth-header">
-            <h1>Creeaza un cont</h1>  
+            <h1>Creeaza un cont</h1>
             <p>Completeaza datele pentru a-ti crea contul</p>
           </div>
 
-          <form 
-          id="register-form" 
-          noValidate
-          onSubmit={handleSubmit}
-          >
+          <form id="register-form" noValidate onSubmit={handleSubmit}>
             <div className="form-group">
               <label className="form-label" htmlFor="reg-name">
                 Nume Complet <span className="required">*</span>
@@ -90,9 +86,8 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                 type="text"
                 placeholder="ex: Ion Popescu"
                 required
-                
                 autoComplete="name"
-                value={name.value}
+                value={String(name.value)}
                 onChange={name.onChange}
                 onBlur={name.onBlur}
               />
@@ -110,7 +105,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                   placeholder="email@exemplu.ro"
                   required
                   autoComplete="email"
-                  value={email.value}
+                  value={String(email.value)}
                   onChange={email.onChange}
                   onBlur={email.onBlur}
                 />
@@ -127,7 +122,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                   placeholder="0722 123 456"
                   required
                   autoComplete="tel"
-                  value={phone.value}
+                  value={String(phone.value)}
                   onChange={phone.onChange}
                   onBlur={phone.onBlur}
                 />
@@ -147,7 +142,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                     placeholder="Minim 8 caractere"
                     required
                     autoComplete="new-password"
-                    value={password.value}
+                    value={String(password.value)}
                     onChange={password.onChange}
                     onBlur={password.onBlur}
                   />
@@ -169,9 +164,8 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                   Foloseste litere mari, cifre si simboluri.
                 </div>
                 {password.error && <div>{password.error}</div>}
-
               </div>
-              
+
               <div className="form-group">
                 <label className="form-label" htmlFor="reg-pass2">
                   Confirma Parola <span className="required">*</span>
@@ -184,13 +178,11 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                     placeholder="Repeta parola"
                     required
                     autoComplete="new-password"
-                    value={confirmPass.value}
+                    value={String(confirmPass.value)}
                     onChange={confirmPass.onChange}
                     onBlur={confirmPass.onBlur}
                   />
 
-
-                  
                   <button
                     type="button"
                     data-toggle-password="reg-pass2"
@@ -201,14 +193,19 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                 </div>
                 {confirmPass.error && <div>{confirmPass.error}</div>}
               </div>
-              
             </div>
             <div className="form-group">
               <label className="form-label" htmlFor="reg-country">
                 Tara <span className="required">*</span>
               </label>
-              <select className="form-select" id="reg-country" required
-              value={country.value} onChange={country.onChange} onBlur={country.onBlur}>
+              <select
+                className="form-select"
+                id="reg-country"
+                required
+                value={String(country.value)}
+                onChange={country.onChange}
+                onBlur={country.onBlur}
+              >
                 <option value="none">Selecteaza tara</option>
                 <option value="RO">Romania</option>
                 <option value="GER">Germania</option>
@@ -227,7 +224,6 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                 type="text"
                 placeholder="Strada, numar, oras, cod postal"
                 required
-                
               />
             </div>
             <div className="form-group">
@@ -240,11 +236,13 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                 type="text"
                 placeholder="Strada, numar, oras, cod postal"
                 required
-                value={adresa_livrare.value}
+                value={String(adresa_livrare.value)}
                 onChange={adresa_livrare.onChange}
                 onBlur={adresa_livrare.onBlur}
               />
-            {adresa_livrare.error && <div className="error">{adresa_livrare.error}</div>}
+              {adresa_livrare.error && (
+                <div className="error">{adresa_livrare.error}</div>
+              )}
 
               <span className="form-hint">
                 Poate fi aceeasi cu adresa de facturare
@@ -253,12 +251,26 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
             </div>
             <div className="form-group">
               <label className="form-checkbox">
-                <input type="checkbox" id="reg-tos" 
-                onChange={(e) => setCheckedField(e.target.checked)}/> Sunt de acord cu{" "}
-                <a href="#">Termenii si Conditiile</a>
+                <input
+                  type="checkbox"
+                  id="reg-tos"
+                  // onChange={(e) => setCheckedField(e.target.checked)}
+
+                  // onChange={(e) => isCheckedTermeni.value === (e.target.checked)}
+
+                  onChange={(e) => {
+                    isCheckedTermeni.setValue(e.target.checked);
+                    isCheckedTermeni.validate();
+                  }}
+                  checked={Boolean(isCheckedTermeni.value)}
+                  onBlur={isCheckedTermeni.onBlur}
+                />{" "}
+                Sunt de acord cu <a href="#">Termenii si Conditiile</a>
               </label>
-              {(checkedField) ?
-              "" : "Termenii trebuiesc acceptati."}
+              {/* {!checkedField&&("Termenii trebuiesc acceptati.")}  //!&& negatia e adevarata => true  */}
+              {isCheckedTermeni.value === true ? 
+                "" : <div className="error">"Termenii trebuiesc acceptati"</div>
+              }
             </div>
             <button
               type="submit"
@@ -271,7 +283,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
           </form>
 
           <div className="auth-footer">
-            Ai deja cont? <Link to={'/login'}>Autentifica-te</Link>
+            Ai deja cont? <Link to={"/login"}>Autentifica-te</Link>
           </div>
         </div>
       </div>
