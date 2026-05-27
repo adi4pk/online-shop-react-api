@@ -65,11 +65,6 @@ export function validateField(opts: { value: string | boolean } & ValidationRule
     // console.log("test");
     console.log(checked);
 
-    if(!checked){
-      
-      console.log(`check is ${checked}`);
-      return checked;
-    } 
   }
   // console.log(!NAME_RE.test(trimmed));
   // console.log(!ADDRESS_RE.test(trimmed));
@@ -112,14 +107,13 @@ export function useField(initial: string | boolean, rules: ValidationRules = {})
     error,
     setValue,
     onChange: (e) => {
-      setValue(e.target.value);
-      setTouched(true);
-      console.log(value);
+      const target = e.target as HTMLInputElement;
+      setValue(target.type === "checkbox" ? target.checked : target.value);
     },
     onBlur: () => setTouched(true),
     validate: () => {
       setTouched(true);
-      return error;
+      return computeError(value);
     },
     reset: (to = "") => {
       setValue(to);

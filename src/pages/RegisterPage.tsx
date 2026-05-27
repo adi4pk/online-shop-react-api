@@ -57,7 +57,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
     const fieldsArr = validateAll([name, email, phone, password, confirmPass, country, adresa_livrare, adresa_facturare, isCheckedTermeni]);
 
-    // if (!fieldsArr) return;
+    if (!fieldsArr) return;
 
     let body: RegisterRequest ={
       email: String(email.value),
@@ -236,10 +236,9 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                 type="text"
                 placeholder="Strada, numar, oras, cod postal"
                 required
-                defaultValue={String(adresa_facturare.value)}
-                // value={String(adresa_facturare.value)}
+                value={String(adresa_facturare.value)}
                 onChange={adresa_facturare.onChange}
-                // onBlur={adresa_facturare.onBlur}
+                onBlur={adresa_facturare.onBlur}
               />
               {adresa_facturare.error && <div className="error">{adresa_facturare.error}</div>}
             </div>
