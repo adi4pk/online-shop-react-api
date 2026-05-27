@@ -55,8 +55,10 @@ export function validateField(opts: { value: string | boolean } & ValidationRule
       return `Minim ${minLength} caractere.`;
     }
     if (custom) return custom(trimmed);
-
+    
   } if (typeof value === "boolean"){
+
+    if (type  === "termeni" && required && value !== true) return "NOT CHECKED";
 
     const checked = value;
     // console.log("test");
@@ -68,16 +70,8 @@ export function validateField(opts: { value: string | boolean } & ValidationRule
       return checked;
     } 
   }
-  
-
-  
-
-  // console.log(type=="name");
   // console.log(!NAME_RE.test(trimmed));
   // console.log(!ADDRESS_RE.test(trimmed));
-
-  
-
   return null;
 }
 
@@ -109,6 +103,8 @@ export function useField(initial: string | boolean, rules: ValidationRules = {})
   const error = touched ? computeError(value) : null;
   // e.g. user types "123" --> computeError("123") => validateField{value: "123", ...rules})
 
+  // computeError returns the string (error message) or null;
+
   return {
     value,
     touched,
@@ -122,7 +118,6 @@ export function useField(initial: string | boolean, rules: ValidationRules = {})
     onBlur: () => setTouched(true),
     validate: () => {
       setTouched(true);
-      // return computeError(value);   //????
       return error;
     },
     reset: (to = "") => {

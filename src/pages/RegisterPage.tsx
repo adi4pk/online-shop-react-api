@@ -268,9 +268,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                 Sunt de acord cu <a href="#">Termenii si Conditiile</a>
               </label>
               {/* {!checkedField&&("Termenii trebuiesc acceptati.")}  //!&& negatia e adevarata => true  */}
-              {isCheckedTermeni.value === true ? 
-                "" : <div className="error">"Termenii trebuiesc acceptati"</div>
-              }
+              {isCheckedTermeni.error && <div className="error">{isCheckedTermeni.error}</div>}
             </div>
             <button
               type="submit"
