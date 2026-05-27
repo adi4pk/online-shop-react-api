@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import AppRoutes from "@/routes/AppRoutes";
 import type { FieldType } from "@/lib/validation";
 import type { ValidationRules } from "@/lib/validation";
 
@@ -37,17 +38,24 @@ const confirmPass = useField("", {
 });
 
 const country = useField("", { required: true, type: "country"});
-const adresa_livrare = useField("", { required: true, type: "address"});
 const adresa_facturare = useField("", { required: true, type: "address"});
+const adresa_livrare = useField("", { required: true, type: "address"});
+
 const isCheckedTermeni = useField(false, {required: true, type: "termeni"});
 
 
 const [checkedField, setCheckedField] = useState(true);
 
-const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+let navigate = useNavigate();
+
+let goToProducts: () => void = () => {
+  navigate('/products')
+}
+
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const fieldsArr = validateAll([name, email, phone, password, confirmPass, country, adresa_livrare, adresa_facturare]);
+    const fieldsArr = validateAll([name, email, phone, password, confirmPass, country, adresa_livrare, adresa_facturare, isCheckedTermeni]);
 
     // if (!fieldsArr) return;
 
@@ -61,7 +69,11 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       phone: String(phone.value),
     }
 
-    register(body);
+    const data = await register(body);
+
+    if (data?.accessToken) goToProducts();
+    
+
   }
 
 
@@ -224,7 +236,12 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                 type="text"
                 placeholder="Strada, numar, oras, cod postal"
                 required
+                defaultValue={String(adresa_facturare.value)}
+                // value={String(adresa_facturare.value)}
+                onChange={adresa_facturare.onChange}
+                // onBlur={adresa_facturare.onBlur}
               />
+              {adresa_facturare.error && <div className="error">{adresa_facturare.error}</div>}
             </div>
             <div className="form-group">
               <label className="form-label" htmlFor="reg-shipping">
@@ -240,14 +257,11 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                 onChange={adresa_livrare.onChange}
                 onBlur={adresa_livrare.onBlur}
               />
-              {adresa_livrare.error && (
-                <div className="error">{adresa_livrare.error}</div>
-              )}
-
+              {adresa_livrare.error && <div className="error">{adresa_livrare.error}</div>}
               <span className="form-hint">
                 Poate fi aceeasi cu adresa de facturare
               </span>
-              {/* {adresa_facturare.error && <div className="error">{adresa_facturare.error}</div>} */}
+              
             </div>
             <div className="form-group">
               <label className="form-checkbox">

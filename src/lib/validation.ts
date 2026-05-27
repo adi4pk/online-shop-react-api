@@ -37,6 +37,7 @@ const ADDRESS_RE = /^(?=.*\d)[A-Za-z0-9 ]+$/;
 export function validateField(opts: { value: string | boolean } & ValidationRules): string | null | boolean {
   const { value, required, type, minLength, custom } = opts;
   console.log(typeof(value)==="boolean");
+  console.log(value);
 
   if (typeof value === "string"){
     const trimmed = value?.trim() ?? "";
@@ -58,7 +59,7 @@ export function validateField(opts: { value: string | boolean } & ValidationRule
     
   } if (typeof value === "boolean"){
 
-    if (type  === "termeni" && required && value !== true) return "NOT CHECKED";
+    if (type  === "termeni" && required && value !== true) return "Termenii trebuiesc acceptati.";
 
     const checked = value;
     // console.log("test");
