@@ -12,9 +12,24 @@ import type { RegisterRequest } from "@/types/api";
 import { register } from "@/api/auth";
 import type { AuthResponse } from "@/types/api";
 
+import { useToast } from "@/lib/toast";
+import type { RegisterErrorResponse } from "@/models/RegisterErrorResponse";
+
+
 function RegisterPage() {
 
+let toast = useToast();
 
+function isRegisterError(err: unknown): err is RegisterErrorResponse{
+
+  return (
+    typeof err === "object" &&
+    err !== null &&
+    "message" in err &&
+    "status" in err
+  )
+
+}
 
 const name = useField("", { required: true, type: "name"});
   //name = un obiect cu proprietatile lui FieldHookResult, i.e. value, touched, error etc...
@@ -45,6 +60,7 @@ const isCheckedTermeni = useField(false, {required: true, type: "termeni"});
 
 
 const [checkedField, setCheckedField] = useState(true);
+const [regError, setRegError] = useState("");
 
 let navigate = useNavigate();
 
@@ -54,6 +70,8 @@ let goToProducts: () => void = () => {
 
 const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    
 
     const fieldsArr = validateAll([name, email, phone, password, confirmPass, country, adresa_livrare, adresa_facturare, isCheckedTermeni]);
 
@@ -69,9 +87,45 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       phone: String(phone.value),
     }
 
-    const data = await register(body);
+    // const data = await register(body);
+    // console.log(data);
 
-    if (data?.accessToken) goToProducts();
+    // TRY/ CATCH WORKS -- had to modify client.ts
+    try{
+      
+      const response = await register(body);
+
+      // console.log(response.accessToken); -- response.json() is already done within fetchApi
+ 
+    } catch(err: unknown){
+
+      if(isRegisterError(err)){
+        const e = err as RegisterErrorResponse;
+        console.log(e.message, e.status);
+      }
+    }
+
+
+    // DOES NOT CATCH ERROR
+    // try {
+    //   const response = await register(body);
+    //   console.log("Success", response);
+
+    // } catch (err: unknown){
+    //   if(err instanceof Error){
+    //     setRegError(err.message);
+    //   } else {
+    //     setRegError("Unknown error");
+    //   }
+    // }
+
+    
+    
+    // if (data?.accessToken) {
+
+    //   toast.show({ type: "success", title: "Salvat", message: "Datele au fost salvate." });
+    //   // goToProducts();
+    // }
     
 
   }

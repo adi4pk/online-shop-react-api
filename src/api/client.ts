@@ -59,13 +59,18 @@ export async function apiFetch<T>(path: string, options: ApiOptions = {}): Promi
     if (ok) {
       headers.Authorization = "Bearer " + getAccessToken();
       response = await fetch(url, init);
-    }
+    } 
   }
 
   // 5. Citeste raspunsul
   if (response.status === 204) return undefined as T;
   const data = await response.json();
-  if (!response.ok) throw new Error(data?.message || "Eroare la cerere");
+  if (!response.ok) 
+    throw {
+  message: data?.message || "Eroare la cerer",
+  status: response.status,
+
+  };
   return data as T;
 }
 
@@ -83,6 +88,9 @@ async function tryRefresh(): Promise<boolean> {
     clearTokens();
     return false;
   }
+
+  // if (response.status === 409){
+  // }
 
   const data: AuthResponse = await response.json();
   saveTokens(data.accessToken, data.refreshToken);
