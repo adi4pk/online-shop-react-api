@@ -14,7 +14,9 @@ import type { AuthResponse } from "@/types/api";
 
 import { useToast } from "@/lib/toast";
 import type { RegisterErrorResponse } from "@/models/RegisterErrorResponse";
-
+import { saveTokens } from "@/api/tokenStorage";
+import { PasswordInput } from "@/lib/PasswordInput";
+import { PasswordMeter } from "@/lib/PasswordMeter";
 
 function RegisterPage() {
 
@@ -94,7 +96,13 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try{
       
       const response = await register(body);
+      toast.show({type: "success", title:"Registration successful", message: "Your account has been created."})
 
+      const accessToken = response.accessToken;
+      const refreshToken = response.refreshToken;
+      
+      saveTokens(accessToken, refreshToken);
+      goToProducts();
       // console.log(response.accessToken); -- response.json() is already done within fetchApi
  
     } catch(err: unknown){
@@ -102,6 +110,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       if(isRegisterError(err)){
         const e = err as RegisterErrorResponse;
         console.log(e.message, e.status);
+        toast.show({type: "error", title: "Registration error", message: "Email is already in use."})
       }
     }
 
@@ -119,8 +128,6 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     //   }
     // }
 
-    
-    
     // if (data?.accessToken) {
 
     //   toast.show({ type: "success", title: "Salvat", message: "Datele au fost salvate." });
@@ -200,7 +207,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                 <label className="form-label" htmlFor="reg-pass">
                   Parola <span className="required">*</span>
                 </label>
-                <div className="password-toggle">
+                {/* <div className="password-toggle">
                   <input
                     className="form-input"
                     id="reg-pass"
@@ -219,16 +226,20 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                   >
                     👁
                   </button>
-                </div>
-                <div className="password-meter">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </div>
-                <div className="password-meter-label">
-                  Foloseste litere mari, cifre si simboluri.
-                </div>
+                </div> */}
+                
+                <PasswordInput
+                id="login-password"
+                value={String(password.value)}
+                onChange={password.onChange}
+                onBlur={password.onBlur}
+                placeholder="Minim 8 caractere"
+                required
+                ></PasswordInput>
+                <PasswordMeter
+                value={String(password.value)}
+                >
+                </PasswordMeter>
                 {password.error && <div>{password.error}</div>}
               </div>
 
