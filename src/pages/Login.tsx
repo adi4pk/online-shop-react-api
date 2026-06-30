@@ -9,13 +9,22 @@ import { LoginErrorResponse } from "@/models/LoginErrorResponse";
 import { useToast } from "@/lib/toast";
 import { saveTokens } from "@/api/tokenStorage";
 
+// import { CircularProgress } from "@mui/material";
+import { ClipLoader } from "react-spinners";
+import { AuthContext, useAuthContext } from "@/components/contexts/AuthContext";
+
+
 function Login() {
 
   const navigate = useNavigate(); 
+  
+  let {loginnn} = useAuthContext(); 
   let toast = useToast();
+
 
   const email = useField("", {required: true, type:"email"})
   const pass = useField("", {required: true, type:"password", minLength:8});
+  const [isLoading, setIsLoading] = useState<Boolean>(false);
 
     // this returns a bool -- 'err is LoginErrorResponse' basically implies we'll get a boolean in return;
     // A function with a type predicate return type must return a boolean expression
@@ -46,13 +55,10 @@ function Login() {
     
 
     try {
-      const response = await login(loginBody);
+            setIsLoading(true);
+            loginnn(loginBody);
 
-    
-      const accessToken = response.accessToken;
-      const refreshToken = response.refreshToken;
-
-      saveTokens(accessToken, refreshToken);
+      //[response] - “Give me the first item from the resulting array” - DESTRUCTURING
       navigate("/products");
       console.log("test success");
 
@@ -60,8 +66,10 @@ function Login() {
       if(isLoginError(err)){
         const e = err as LoginErrorResponse;
         console.log(e.message, e.status)
-        toast.show({type: "error", title: "Login error", message: e.message})
+        toast.show({type: "error", title: "Login error", message: e.message});
       }
+    } finally{
+      setIsLoading(false);
     }
       
   
@@ -156,7 +164,8 @@ function Login() {
             id="login-submit"
             className="btn btn-primary btn-block btn-lg"
           >
-            Autentificare
+            
+            {isLoading ? <ClipLoader size={20}/> : "Autentificare"}
           </button>
         </form>
 
@@ -170,6 +179,7 @@ function Login() {
           </Link>
         </div>
       </div>
+      {isLoading && <div className="loading-effect">Loading</div>}
     </div>
   );
 }

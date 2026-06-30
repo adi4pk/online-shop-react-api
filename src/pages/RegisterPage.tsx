@@ -17,12 +17,16 @@ import type { RegisterErrorResponse } from "@/models/RegisterErrorResponse";
 import { saveTokens } from "@/api/tokenStorage";
 import { PasswordInput } from "@/lib/PasswordInput";
 import { PasswordMeter } from "@/lib/PasswordMeter";
+import { useAuthContext } from "@/components/contexts/AuthContext";
 
 function RegisterPage() {
 
 let toast = useToast();
+let {registerrr} = useAuthContext();
 
 function isRegisterError(err: unknown): err is RegisterErrorResponse{
+
+  //if err:uknown matches all 4 conditions below as TRUE -> err is of type RegisterErrorResponse
 
   return (
     typeof err === "object" &&
@@ -79,7 +83,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
     if (!fieldsArr) return;
 
-    let body: RegisterRequest ={
+let body: RegisterRequest ={
       email: String(email.value),
       password: String(password.value),
       fullName: String(name.value),
@@ -95,13 +99,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     // TRY/ CATCH WORKS -- had to modify client.ts
     try{
       
-      const response = await register(body);
-      toast.show({type: "success", title:"Registration successful", message: "Your account has been created."})
-
-      const accessToken = response.accessToken;
-      const refreshToken = response.refreshToken;
-      
-      saveTokens(accessToken, refreshToken);
+      registerrr(body);
       goToProducts();
       // console.log(response.accessToken); -- response.json() is already done within fetchApi
  
