@@ -56,10 +56,10 @@ function Login() {
 
     try {
             setIsLoading(true);
-            loginnn(loginBody);
+            await loginnn(loginBody);
 
       //[response] - “Give me the first item from the resulting array” - DESTRUCTURING
-      navigate("/products");
+      // navigate("/products");
       console.log("test success");
 
     } catch(err: unknown){

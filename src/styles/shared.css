@@ -1849,7 +1849,7 @@ a:hover {
   }
 }
 
-
+/* MODAL DIALOG BOX -- LOGOUT*/
 
 /* 1. Overlay (fog layer) */
 .modal-overlay-fog {
@@ -1902,6 +1902,6 @@ a:hover {
 }
 
 .confirm {
-  background: #e53935;
+  background: rgb(26, 86, 219);
   color: white;
 }
