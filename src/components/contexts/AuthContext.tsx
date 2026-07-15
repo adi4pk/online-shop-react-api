@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import { JwtPayload } from "@/api/tokenStorage";
 import { decodeJwt } from "@/api/tokenStorage";
 
+//INTERFATA Context
 interface AuthContextType{
     user: User | null;
     setUser: (user: User | null) => void;
@@ -26,6 +27,7 @@ interface AuthContextType{
     hasPermission?: boolean;
 }
 
+// VALORI de INITIERE
 export const AuthContext = createContext<AuthContextType>({
     user: null,
     setUser: (user: User | null) =>{},
@@ -37,6 +39,7 @@ export const AuthContext = createContext<AuthContextType>({
 })
 
 
+//INTERFATA Children elements
 interface AuthProviderProps{
     children: ReactNode;
 }
@@ -57,13 +60,19 @@ export function AuthProvider({children}:AuthProviderProps){
         const token = getAccessToken();     //user is initially null but token is still stored locally.
 
         if (token){
+            try
+            {
             const payload = decodeJwt(token);
 
             setUser({
                 email: payload.sub,
                 hasPermissions: true,
             })
+        } catch{
+            clearTokens();
         }
+        }
+            
 
         setAuthReady(true);     // makes the component re-render 
         // --> user is now !=null and the value will be grabbed by Public/Private Route

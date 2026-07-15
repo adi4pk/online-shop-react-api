@@ -99,7 +99,7 @@ let body: RegisterRequest ={
     // TRY/ CATCH WORKS -- had to modify client.ts
     try{
       
-      registerrr(body);
+      await registerrr(body);
       goToProducts();
       // console.log(response.accessToken); -- response.json() is already done within fetchApi
  

@@ -26,9 +26,14 @@ export interface ValidationRules {
   custom?: (value: string) => string | null;
 }
 
-const NAME_RE = /^[A-Za-z]+$/;
+// const NAME_RE = /^[A-Za-z]+$/;
+const NAME_RE = /^[A-Za-zĂÂÎȘȚăâîșț' -]+$/; 
+// litere, diacritice, spațiu, cratimă
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const ADDRESS_RE = /^(?=.*\d)[A-Za-z0-9 ]+$/;
+// const ADDRESS_RE = /^(?=.*\d)[A-Za-z0-9 ]+$/;
+const ADDRESS_RE = /^(?=.*\d)[A-Za-z0-9ĂÂÎȘȚăâîșț .,-]+$/;
+// + punct, virgulă
 
 /**
  * Validate a single field value. Returns an error message, or null if valid.

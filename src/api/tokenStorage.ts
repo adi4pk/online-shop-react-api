@@ -32,6 +32,6 @@ export interface JwtPayload {
 
 
 export function decodeJwt(token: string): JwtPayload {
-  const payload = token.split(".")[1];
+  const payload = token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/");
   return JSON.parse(atob(payload));
 }

@@ -17,12 +17,12 @@ function AccountSidebar() {
         <Link to={"/account/orders"}>&#128230; Comenzile mele</Link>
         <Link to={"/account/profile"}>&#9786; Profil</Link>
         <Link to={"/account/addresses"}>&#127968; Adrese</Link>
-        <Link 
+        <button type="button" 
         // to={"/login"} id="logout-link"
         onClick={() => setIsModal(true)}
         >
           &#10140; DECONECTARE
-        </Link>
+        </button>
       </div>
     </>
   );
