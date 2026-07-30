@@ -1,12 +1,108 @@
 # Code Review — Epic 4: Authentication
 
-Salut, Adrian! Am trecut prin cele 11 commit-uri noi (până la `a1cb919`). Epic 4 e un salt mare:
-AuthContext cu hidratare din JWT, rute protejate, login/register funcționale, confirm dialog la
-logout. Arhitectura e corectă și se vede că ai înțeles conceptele, nu doar le-ai copiat.
+> **Runda 2** (după commit `abab341 "fix: bug 1-5"`) e mai jos, prima.
+> **Runda 1** e păstrată ca istoric, sub separator — bug-urile B1–B4 de acolo sunt **rezolvate**.
+> Aceleași constatări sunt și inline pe PR #1.
 
-Mai jos ai review-ul complet: întâi ce e bine, apoi bug-urile (în ordinea priorității), apoi
-curățenia. La fiecare punct ai și explicația *de ce* — citește-le pe toate înainte să te apuci
-de fix-uri.
+---
+
+# 🔵 Runda 2 — post `fix: bug 1-5`
+
+Bravo pentru fix-urile din runda 1: `atob` pe base64url e reparat, `await registerrr` e la locul lui,
+regex-urile acceptă acum diacritice/spații/virgule, decodarea e împachetată în try/catch, iar în
+`20f0318` ai aplicat și C3 — `createContext<AuthContextType | null>(null)`, deci guard-ul din
+`useAuthContext` chiar prinde acum folosirea în afara Provider-ului. Gate-ul `authReady` + fluxul prin
+context rămân partea solidă a epicului. *(Ancorele de linie de mai jos sunt pe `20f0318`.)*
+
+Runda asta am prins **un bug real de sesiune** (B1), câteva decizii de design (permisiuni, model de
+eroare, routing) și curățenie rămasă. Ordinea de lucru: B1 → M1–M4 → C1–C5, fiecare cu commit separat.
+
+## 🔴 Critic
+
+### B1. Restore de sesiune fără verificare `exp` — `AuthContext.tsx:54-62` + `tokenStorage.ts:34`
+
+`useEffect`-ul de la pornire decodează token-ul și te loghează necondiționat — **nu verifică dacă a
+expirat**. `JwtPayload` are deja câmpul `exp` (`tokenStorage.ts:30`), dar nu-l folosești nicăieri.
+
+Lanțul de efecte când access token-ul e expirat dar mai există în localStorage:
+
+1. La refresh, `decodeJwt` reușește (token-ul e valid ca *formă*, doar expirat) → `setUser(...)` → app-ul te crede logat.
+2. Primul call protejat dă `401` → `client.ts` cheamă `tryRefresh()`.
+3. Dacă și refresh token-ul e expirat → `clearTokens()` șterge tokenii, **dar `user` rămâne setat**.
+4. Rezultat: aplicația arată logat, dar orice cerere pică tăcut. Utilizatorul e blocat într-o stare fantomă.
+
+`catch`-ul de acum prinde doar token-ul **corupt** (JSON invalid), nu și pe cel **expirat** — sunt două lucruri diferite.
+
+| Acum (`AuthContext.tsx:54-66`) | Corect |
+|---|---|
+| <pre>if (token){<br>  try {<br>    const payload = decodeJwt(token);<br>    setUser({<br>      email: payload.sub,<br>      hasPermissions: true,<br>    })<br>  } catch {<br>    clearTokens();<br>  }<br>}</pre> | <pre>if (token) {<br>  try {<br>    const payload = decodeJwt(token);<br>    if (payload.exp * 1000 < Date.now()) {<br>      clearTokens();<br>    } else {<br>      setUser({ email: payload.sub, hasPermissions: hasRole(payload) });<br>    }<br>  } catch {<br>    clearTokens();<br>  }<br>}</pre> |
+
+**De ce contează mecanismul:** `exp` din JWT e în **secunde** (unix), iar `Date.now()` e în **milisecunde** — de aici `* 1000`. Verificarea pe frontend nu e „securitate" (backend-ul oricum respinge token-ul), ci **corectitudinea stării UI**: nu afișezi logat pe cine nu mai e.
+
+## 🟡 Important
+
+### M1. `hasPermissions: true` hardcodat — `AuthContext.tsx:61, 84, 105`
+
+Îl pui `true` în toate cele 3 locuri (restore, register, login), iar `payload.authorities` din JWT nu e
+citit niciodată. În plus, `hasPermission?` e declarat în interfața contextului (`:27`) dar nu ajunge
+niciodată în `value` (`:117`). Momentan **orice** user „are permisiuni" — pentru rutele de admin (ai deja
+`admin.css` + `AccountSidebar`) e gating fals.
+
+Fix: derivă rolul din token — `const isAdmin = payload.authorities?.includes("ROLE_ADMIN")` — și expune-l
+real prin context, ca `ProtectedRoute` să-l poată folosi pentru un `requireAdmin`.
+
+### M2. Arunci un obiect simplu, nu un `Error` — `client.ts:69-73`
+
+`throw { message, status }` merge cu type-guard-urile tale (`"message" in err`), dar:
+- pierzi `stack`-ul și nu poți face `err instanceof Error`;
+- `LoginErrorResponse`/`RegisterErrorResponse` declară `timestamp`, `error`, `path` — câmpuri care **nu
+  există niciodată** pe obiectul aruncat. Modelul declarat minte despre ce primești de fapt.
+
+Fix: o clasă `ApiError extends Error` cu `status`, aruncată din `apiFetch`; guard-ul devine
+`err instanceof ApiError`. (Și typo: „Eroare la cerer" → „cerere".)
+
+### M3. Import circular `AppRoutes` — `RegisterPage.tsx:2`
+
+`RegisterPage` importă `AppRoutes`, dar `AppRoutes` îl randează pe `RegisterPage` → ciclu de import. E și
+complet nefolosit. Șterge linia.
+
+### M4. `location.pathname` = global, nu router — `ProtectedRoutes.tsx:13, 41`
+
+`location` se rezolvă la `window.location` (variabilă globală) — merge în browser din întâmplare, dar
+ocolești react-router. Corect: `const { pathname } = useLocation()`. Bonus: log-ul din `PublicRoute` (`:41`)
+scrie greșit `"ProtectedRoute"`. Oricum, `console.log`-urile se scot înainte de merge.
+
+## 🟢 Cleanups
+
+- **C1 — naming** (`AuthContext.tsx:23-25`): `loginnn`/`logouttt`/`registerrr` sunt API-ul public al
+  contextului. Redenumește `login`/`logout`/`register`; coliziunea cu `@/api/auth` o rezolvi cu alias la
+  import (`import { login as apiLogin }`), nu cu `n`-uri. *(carry-over din C2 runda 1)*
+- **C2 — `console.log` pe hot path** (`validation.ts:44, 71`): `validateField` rulează la fiecare
+  keystroke. Șterge log-urile (plus cele din `ProtectedRoutes` și `Login`).
+- **C3 — `useState<Boolean>`** (`Login.tsx:27`): `Boolean` cu `B` mare e tipul wrapper-obiect. Folosește
+  `useState<boolean>` sau lasă inferența `useState(false)`.
+- **C4 — importuri moarte**: `Login.tsx` — `login` (`:2`), `saveTokens` (`:10`), `AuthContext` (`:14`);
+  `RegisterPage.tsx` — `register`, `saveTokens`, `AuthResponse`, `FieldType`, `ValidationRules`.
+- **C5 — `id="login-password"` copiat în register** (`RegisterPage.tsx:231`): id-ul e deja folosit în
+  Login → nu mai e unic pe pagină, iar `<label htmlFor="reg-pass">` de deasupra nu mai pointează la nimic.
+  Pune `id="reg-pass"`.
+
+## Q&A — răspunde pe PR
+
+1. La refresh cu un access token **expirat** dar refresh token **valid** — descrie pas cu pas ce se
+   întâmplă acum, și exact unde se rupe dacă și refresh-ul e expirat.
+2. De ce `if (response)` din `loginnn`/`registerrr` e **mereu** adevărat dacă execuția a ajuns la linia
+   aia? Ce ai vrut de fapt să verifici acolo?
+3. Dacă backend-ul trimite `authorities: ["ROLE_USER"]`, cum blochezi o rută `/admin` pentru el **fără**
+   să modifici `ProtectedRoute`?
+
+---
+
+<br>
+
+# ⚪ Runda 1 — istoric (B1–B4 REZOLVATE)
+
+*Numerotarea de mai jos e din runda 1 și nu se suprapune cu cea de sus. Păstrată pentru context.*
 
 ---
 
