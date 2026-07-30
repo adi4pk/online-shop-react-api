@@ -26,11 +26,9 @@ function Dialog({ onClose }: DialogProps){
                         <button className="btn cancel"
                         onClick={onClose}
                         >Cancel</button>
-                        <Link to={"/login"} id="logout-link">
                         <button className="btn confirm"
                         onClick={logouttt}
                         >Logout</button>
-                        </Link>
                     </div>
                 </div>
             </div>

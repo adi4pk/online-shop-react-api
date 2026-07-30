@@ -12,6 +12,7 @@ import type { RegisterRequest } from "@/types/api";
 import { register } from "@/api/auth";
 import type { AuthResponse } from "@/types/api";
 
+
 import { useToast } from "@/lib/toast";
 import type { RegisterErrorResponse } from "@/models/RegisterErrorResponse";
 import { saveTokens } from "@/api/tokenStorage";

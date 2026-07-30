@@ -28,15 +28,7 @@ interface AuthContextType{
 }
 
 // VALORI de INITIERE
-export const AuthContext = createContext<AuthContextType>({
-    user: null,
-    setUser: (user: User | null) =>{},
-    loginnn: async () => {},
-    logouttt:() => {},
-    registerrr: async()=> {},
-    authReady: false,
-    // hasPermission: false,
-})
+export const AuthContext = createContext<AuthContextType | null>(null);
 
 
 //INTERFATA Children elements
