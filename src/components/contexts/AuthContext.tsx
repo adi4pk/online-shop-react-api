@@ -56,12 +56,18 @@ export function AuthProvider({children}:AuthProviderProps){
             {
             const payload = decodeJwt(token);
 
-            setUser({
+            if(payload.exp * 1000 > Date.now()){
+                setUser({
                 email: payload.sub,
                 hasPermissions: true,
             })
+            } else logouttt();
+
+            
         } catch{
-            clearTokens();
+            // clearTokens();
+            // setUser(null);
+            logouttt();
         }
         }
             
