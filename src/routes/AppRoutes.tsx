@@ -12,24 +12,32 @@ import AccountOrdersPage from "@/pages/account/AccountOrdersPage";
 import AccountProfilePage from "@/pages/account/AccountProfilePage";
 import AccountAddresses from "@/pages/account/AccountAddresses";
 import NotFoundPage from "@/pages/NotFoundPage";
+import { ReactElement } from "react";
+
+import { ProtectedRoute } from "./ProtectedRoutes";
+import { PublicRoute } from "./ProtectedRoutes";
+
+
 
 function AppRoutes() {
+
+  
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/products" element={<ProductsPage />} />
-        <Route path="/products/:id" element={<ProductDetailPage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/checkout" element={<CheckoutPage />} />
-        <Route path="/confirmation/:orderId" element={<ConfirmationPage />} />
-        <Route path="/account/orders" element={<AccountOrdersPage />} />
-        <Route path="/account/profile" element={<AccountProfilePage />} />
-        <Route path="/account/addresses" element={<AccountAddresses />} />
+        <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+        <Route path="/products" element={<ProtectedRoute><ProductsPage/></ProtectedRoute>} />
+        <Route path="/products/:id" element={<ProtectedRoute><ProductDetailPage /></ProtectedRoute>} />
+        <Route path="/cart" element={<ProtectedRoute><CartPage /></ProtectedRoute>} />
+        <Route path="/checkout" element={<ProtectedRoute><CheckoutPage /></ProtectedRoute>} />
+        <Route path="/confirmation/:orderId" element={<ProtectedRoute><ConfirmationPage /></ProtectedRoute>} />
+        <Route path="/account/orders" element={<ProtectedRoute><AccountOrdersPage /></ProtectedRoute>} />
+        <Route path="/account/profile" element={<ProtectedRoute><AccountProfilePage /></ProtectedRoute>} />
+        <Route path="/account/addresses" element={<ProtectedRoute><AccountAddresses /></ProtectedRoute>} />
       </Route>
 
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/login" element={<PublicRoute><Login/></PublicRoute>} />
+      <Route path="/register" element={<PublicRoute><RegisterPage/></PublicRoute>} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );

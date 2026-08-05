@@ -20,3 +20,18 @@ export function clearTokens(): void {
   localStorage.removeItem(ACCESS_KEY);
   localStorage.removeItem(REFRESH_KEY);
 }
+
+
+export interface JwtPayload {
+  type: string;
+  authorities: string[];
+  sub: string;
+  iat: number;
+  exp: number;
+}
+
+
+export function decodeJwt(token: string): JwtPayload {
+  const payload = token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/");
+  return JSON.parse(atob(payload));
+}

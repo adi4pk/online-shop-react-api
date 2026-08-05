@@ -747,6 +747,10 @@ tbody tr:last-child td {
   gap: 16px;
 }
 
+.loading-effect{
+  cursor: wait;
+}
+
 /* ── Responsive ── */
 @media (max-width: 1024px) {
   .stats-grid {

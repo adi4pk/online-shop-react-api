@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 
 function CartPage() {
+
+console.log("CART PAGE");
+
   return (
     <div className="container">
       <div className="section" style={{ paddingBottom: "0" }}>
