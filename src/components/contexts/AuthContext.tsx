@@ -24,7 +24,7 @@ interface AuthContextType{
     logouttt:() => void;
     registerrr:(body: RegisterRequest)=> Promise<void>;
     authReady: boolean;
-    hasPermission?: boolean;
+    // hasPermissions?: boolean;       // not needed
 }
 
 // VALORI de INITIERE
@@ -44,6 +44,17 @@ export function AuthProvider({children}:AuthProviderProps){
     // before AuthProvider finishes restoring the session.
 
 
+    const WRITE_PERMISSIONS = ["PRODUCT_WRITE", "PERMISSION_WRITE", "ORDER_DETAILS_WRITE",
+        "USER_WRITE", "PERMISSION_READ", "ORDER_READ"];
+
+
+    function buildUser(payload: JwtPayload) {
+        return {
+            email: payload.sub,
+            hasPermissions: WRITE_PERMISSIONS.some(role => payload.authorities.includes(role)),
+            // hasPermissions: payload.authorities ?? [],
+        }
+    }
 
     let toast = useToast();
 
@@ -55,12 +66,10 @@ export function AuthProvider({children}:AuthProviderProps){
             try
             {
             const payload = decodeJwt(token);
+            // aici parsam stringul token in --> obiect JwtPayload
 
-            if(payload.exp * 1000 > Date.now()){
-                setUser({
-                email: payload.sub,
-                hasPermissions: true,
-            })
+            if (payload.exp * 1000 > Date.now()) {
+                setUser(buildUser(payload));
             } else logouttt();
 
             
@@ -80,37 +89,50 @@ export function AuthProvider({children}:AuthProviderProps){
 
     async function registerrr (body: RegisterRequest) {
 
-        const response = await register(body);
-        toast.show({type: "success", title: "Registration successful", message: "Your account has been created."})
+        try{            //??move try/catch to ---> component
+             const response = await register(body);
+        
 
         const accessToken = response.accessToken;
         const refreshToken = response.refreshToken;
 
+        const payload = decodeJwt(accessToken);
+
+
+
         if(response){
-            setUser({email: response.email, hasPermissions: true});
-                    saveTokens(accessToken, refreshToken);
+            setUser(buildUser(payload));
+            saveTokens(accessToken, refreshToken);
 
         }
+
+        toast.show({ type: "success", title: "Registration successful", message: "Your account has been created." })
+        } catch(e){
+            toast.show({type: "error", title: "Registration failed", message: "something went wrong."})
+            throw e;
+        }
+       
 
         
     }
 
     
-    async function loginnn (body: LoginRequest) {
+    async function loginnn(body: LoginRequest) {
 
         const [response] = await Promise.all([login(body),
         new Promise((resolve) => setTimeout(resolve, 1200))
-      ]);
+        ]);
 
-      const accessToken = response.accessToken;
-      const refreshToken = response.refreshToken;
+        const accessToken = response.accessToken;
+        const refreshToken = response.refreshToken;
 
-      
-      
-      if(response){
-        setUser({email: response.email, hasPermissions: true})
-        saveTokens(accessToken, refreshToken);
-      }
+        const payload = decodeJwt(accessToken);
+
+        if (response) {
+            setUser(buildUser(payload));
+            saveTokens(accessToken, refreshToken);
+
+        }
     }
 
     function logouttt(){

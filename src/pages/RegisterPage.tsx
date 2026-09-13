@@ -38,6 +38,9 @@ function isRegisterError(err: unknown): err is RegisterErrorResponse{
 
 }
 
+//useField -> returneaza un Obiect de tipul FieldHookResult{};
+//validateField -> returneaza eroarea sau NULL. -- ruleaza inauntrul lui useField prin variabila computeError
+
 const name = useField("", { required: true, type: "name"});
   //name = un obiect cu proprietatile lui FieldHookResult, i.e. value, touched, error etc...
 
@@ -48,7 +51,7 @@ const phone = useField("", {required: true, type:"tel", minLength: 10})
 const password = useField("", {required: true, minLength: 8});
 const confirmPass = useField("", {
   required: true,
-  custom: (pass) => {
+  custom: (pass) => {   //arrow function
 //(pass !== password.value ? "Parolele nu coincid" : null)
 
   if(pass!==password.value){

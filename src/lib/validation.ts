@@ -40,14 +40,17 @@ const ADDRESS_RE = /^(?=.*\d)[A-Za-z0-9ĂÂÎȘȚăâîșț .,-]+$/;
  * Mirrors the rules used by the vanilla `shared.js` blur listener.
  */
 export function validateField(opts: { value: string | boolean } & ValidationRules): string | null | boolean {
-  const { value, required, type, minLength, custom } = opts;
+  const { value, required, type, minLength, custom } = opts;    //--> destructuring
   console.log(typeof(value)==="boolean");
   // console.log(value);
 
   if (typeof value === "string"){
-    const trimmed = value?.trim() ?? "";
+    const trimmed = value?.trim() ?? "";    //daca value nu este null sau undefined, atunci apeleaza .trim();
+    // --> altfel returneaza undefined;
     if (required && !trimmed) return "Acest camp este obligatoriu.";
     if (!trimmed) return null; // optional field, empty -> ok
+
+//ERROR MESSAGES for each FIELD --- if field.test(trimmed) returns fail --> return error;
 
     if (type === "name" && !NAME_RE.test(trimmed))
       return "Numele trebuie sa contina numai litere";
@@ -100,12 +103,16 @@ export function useField(initial: string | boolean, rules: ValidationRules = {})
   const [value, setValue] = useState(initial);
   const [touched, setTouched] = useState(false);
 
+
+ // computeError is a function that takes v as an argument -> executes validateField 
+ // -> returns whatever OBJECT validateField returns;
   const computeError = (v: string | boolean) => validateField({ value: v, ...rules }); // value from opts becomes -> v
   const error = touched ? computeError(value) : null;
   // e.g. user types "123" --> computeError("123") => validateField{value: "123", ...rules})
 
   // computeError returns the string (error message) or null;
 
+  //--> returns an Object of type FieldHookResult();
   return {
     value,
     touched,
