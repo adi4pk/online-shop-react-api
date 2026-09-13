@@ -62,8 +62,8 @@ function Login() {
       // navigate("/products");
       console.log("test success");
 
-    } catch(err: unknown){
-      if(isLoginError(err)){
+    } catch(err: unknown){    //--> eroarea este prinsa in Component, dar ea provine din //client.ts;
+      if(isLoginError(err)){  // -> aici doar stabilim ce fel de tip este.
         const e = err as LoginErrorResponse;
         console.log(e.message, e.status)
         toast.show({type: "error", title: "Login error", message: e.message});

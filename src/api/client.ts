@@ -20,6 +20,19 @@ import {
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8082";
 
+export class ApiError extends Error{
+  status: number;
+  path: string;
+
+  constructor(message: string, status: number, path: string){
+    super(message);        // --> Multe librării, console și browsere se așteaptă ca mesajul să fie setat prin constructorul lui Error.
+                          // -> aici transmiți valoarea constructorului din clasa părinte.
+    this.status = status;
+    this.path = path;
+  }
+
+}
+
 export type ApiOptions = {
   method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   body?: unknown;
@@ -88,11 +101,17 @@ export async function apiFetch<T>(path: string, options: ApiOptions = {}): Promi
   const data = await response.json();
 
   if (!response.ok) // response.ok este false pentru orice cod în afara intervalului: 200-299 
-    throw {
-  message: data?.message || "Eroare la cerer",    //e.g. refreshTokenul este invalid
-  status: response.status,
+    throw new ApiError(
+      data?.message || "Eroare la cerere",    // message
+      response.status,                        // status
+      data?.path,                              // path
+    )
 
-  };
+    //  {
+  // message: data?.message || "Eroare la cerer",    //e.g. refreshTokenul este invalid
+  // status: response.status,
+
+  // };
   return data as T;
   // spunem compilatorului că datele primite au tipul ales de apelant
 }
