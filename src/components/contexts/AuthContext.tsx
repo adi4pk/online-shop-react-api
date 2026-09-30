@@ -63,6 +63,15 @@ export function AuthProvider({children}:AuthProviderProps){
 
         const token = getAccessToken();     //user is initially null but token is still stored locally.
 
+        const handleAuthExpired = () => {
+            logouttt();
+        }
+
+        window.addEventListener(
+            "auth:expired",
+            handleAuthExpired
+        )
+
         if (token){
             try
             {
@@ -80,10 +89,18 @@ export function AuthProvider({children}:AuthProviderProps){
             logouttt();
         }
         }
-            
 
         setAuthReady(true);     // makes the component re-render 
         // --> user is now !=null and the value will be grabbed by Public/Private Route
+
+
+
+        return () => {
+        window.removeEventListener(
+            "auth:expired",
+            handleAuthExpired
+        )
+        }
     }, [])
 
     

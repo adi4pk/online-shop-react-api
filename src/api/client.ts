@@ -118,7 +118,20 @@ export async function apiFetch<T>(path: string, options: ApiOptions = {}): Promi
 
 async function tryRefresh(): Promise<boolean> {   // fetch() endpoint for  token
   const refreshToken = getRefreshToken();   //if refresh exists -> GET it
-  if (!refreshToken) return false;
+  if (!refreshToken) {
+
+
+    window.dispatchEvent(
+      new Event("auth:expired")
+    );
+
+
+    return false;
+
+  }
+  
+  
+  
   //if accessToken not exists -> END block of code.
 
 
@@ -131,6 +144,12 @@ async function tryRefresh(): Promise<boolean> {   // fetch() endpoint for  token
 
   if (!response.ok) {
     clearTokens();
+
+
+    window.dispatchEvent(
+      new Event("auth:expired")
+    );
+
     return false;
   }
 
