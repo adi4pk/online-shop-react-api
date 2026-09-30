@@ -68,8 +68,15 @@ function Login() {
         console.log(e.message, e.status)
         toast.show({type: "error", title: "Login error", message: e.message});
       }
-    } finally{
-      setIsLoading(false);
+
+    else {    //IMPORTANT - trebuie folosit si ELSE in cazul in care eroarea e de alt tip.
+
+      console.log(err);
+      toast.show({type: "error", title:"uknown error"})
+    }
+
+    } finally{      //-- reseteaza sesiunea de loading
+      setIsLoading(false);  //nu mă interesează dacă login-ul a mers sau nu; la final spinner-ul trebuie oprit.
     }
       
   

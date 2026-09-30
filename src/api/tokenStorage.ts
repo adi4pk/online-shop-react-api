@@ -24,7 +24,7 @@ export function clearTokens(): void {
 
 export interface JwtPayload {
   type: string;
-  authorities: string[];
+  authorities?: string[]; //authorities in token is not always guaranteed;
   sub: string;
   iat: number;
   exp: number;

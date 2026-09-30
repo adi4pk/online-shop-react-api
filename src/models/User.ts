@@ -1,5 +1,6 @@
 export interface User{
 
     email: string;
-    hasPermissions: boolean;
+    authorities: string[];
+    // hasPermissions: boolean;
 }

@@ -51,8 +51,9 @@ export function AuthProvider({children}:AuthProviderProps){
     function buildUser(payload: JwtPayload) {
         return {
             email: payload.sub,
-            hasPermissions: WRITE_PERMISSIONS.some(role => payload.authorities.includes(role)),
-            // hasPermissions: payload.authorities ?? [],
+            authorities: payload.authorities ?? [],     //if authorities == undefined -> return empty list [];
+            // hasPermissions: WRITE_PERMISSIONS.some(role => payload.authorities.includes(role)),
+
         }
     }
 
@@ -65,7 +66,7 @@ export function AuthProvider({children}:AuthProviderProps){
         if (token){
             try
             {
-            const payload = decodeJwt(token);
+            const payload : JwtPayload = decodeJwt(token);
             // aici parsam stringul token in --> obiect JwtPayload
 
             if (payload.exp * 1000 > Date.now()) {
