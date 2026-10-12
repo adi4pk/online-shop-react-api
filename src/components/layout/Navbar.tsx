@@ -1,6 +1,18 @@
 import { Link } from "react-router-dom"
+import { useAuthContext } from "../contexts/AuthContext";
+
+import Dialog from "./Dialog";
+import { useState } from "react";
+
+
 
 function Navbar (){
+
+  const {user} = useAuthContext();
+
+  
+
+
     return(
         <>
             <nav className="navbar">
@@ -31,7 +43,8 @@ function Navbar (){
                             &#128722; Cos <span className="cart-badge">3</span>
                           </Link>
                           <Link to={'/account/profile'} className="user-menu">
-                            <div className="user-avatar">AP</div> Andrei P.
+                            <div className="user-avatar">AP</div> {user?.email}
+                            
                           </Link>
                         </div>
                       </div>

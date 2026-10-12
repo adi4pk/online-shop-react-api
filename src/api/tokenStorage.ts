@@ -1,4 +1,4 @@
-// Pastreaza tokenii JWT in localStorage.
+/// Pastreaza tokenii JWT in localStorage.
 
 const ACCESS_KEY = "online-shop.access-token";
 const REFRESH_KEY = "online-shop.refresh-token";
@@ -19,4 +19,24 @@ export function saveTokens(accessToken: string, refreshToken: string): void {
 export function clearTokens(): void {
   localStorage.removeItem(ACCESS_KEY);
   localStorage.removeItem(REFRESH_KEY);
+}
+
+
+export interface JwtPayload {
+  type: string;
+  authorities?: string[]; //authorities in token is not always guaranteed;
+  sub: string;
+  iat: number;
+  exp: number;
+}
+
+// TOKEN - headers.payload.signature
+// decodeJwt primeste un String si --> returneaza un obiect de tipul JwtPayload
+export function decodeJwt(token: string): JwtPayload {
+  const payload = token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/");
+  return JSON.parse(atob(payload));   //atob() obtine un string asemanator cu interfata JwtPayload
+
+  // JSON.parse transforma stringul '{"type":"access","sub":"adrian","exp":1720003600}'
+  // --> in obiect JavaScript {type: "access", sub: "adrian", exp: 1720003600}
+
 }
