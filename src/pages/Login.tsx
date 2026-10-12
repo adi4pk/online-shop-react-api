@@ -12,6 +12,7 @@ import { saveTokens } from "@/api/tokenStorage";
 // import { CircularProgress } from "@mui/material";
 import { ClipLoader } from "react-spinners";
 import { AuthContext, useAuthContext } from "@/components/contexts/AuthContext";
+import { ApiError } from "@/api/client";
 
 
 function Login() {
@@ -63,16 +64,15 @@ function Login() {
       console.log("test success");
 
     } catch(err: unknown){    //--> eroarea este prinsa in Component, dar ea provine din //client.ts;
-      if(isLoginError(err)){  // -> aici doar stabilim ce fel de tip este.
-        const e = err as LoginErrorResponse;
-        console.log(e.message, e.status)
-        toast.show({type: "error", title: "Login error", message: e.message});
+      if(err instanceof ApiError){  // -> aici doar stabilim ce fel de tip este.
+        
+        toast.show({type: "error", title: "Login error", message: err.message});
       }
 
     else {    //IMPORTANT - trebuie folosit si ELSE in cazul in care eroarea e de alt tip.
 
       console.log(err);
-      toast.show({type: "error", title:"uknown error"})
+      toast.show({type: "error", title:"uknown error", message: "unknown body is unknown"})
     }
 
     } finally{      //-- reseteaza sesiunea de loading

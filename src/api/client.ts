@@ -45,7 +45,8 @@ type Headers = { [key: string]: string };
 
 
     // Funcția returnează un Promise<> care conține un obiect de tip <T>.
-export async function apiFetch<T>(path: string, options: ApiOptions = {}): Promise<T> {
+export async function apiFetch<T>(path: string, options: ApiOptions = {}): Promise<T | null>{   
+  //acum callerii lui apiFetch<T> trebuie să accepte posibilitatea de null, deoarece rezultatul nu mai este doar T
   // 1. URL cu query params (daca exista)
   let url = BASE_URL + path;
   if (options.query) {
@@ -87,7 +88,9 @@ export async function apiFetch<T>(path: string, options: ApiOptions = {}): Promi
     if (ok) {
       headers.Authorization = "Bearer " + getAccessToken();
       response = await fetch(url, init); //fetch after refresh token - tryRefresh();
-    } 
+    } else {
+      return null;
+    }
   }
 
   // 5. Citeste raspunsul

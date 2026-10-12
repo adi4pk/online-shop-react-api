@@ -44,8 +44,8 @@ export function AuthProvider({children}:AuthProviderProps){
     // before AuthProvider finishes restoring the session.
 
 
-    const WRITE_PERMISSIONS = ["PRODUCT_WRITE", "PERMISSION_WRITE", "ORDER_DETAILS_WRITE",
-        "USER_WRITE", "PERMISSION_READ", "ORDER_READ"];
+    // const WRITE_PERMISSIONS = ["PRODUCT_WRITE", "PERMISSION_WRITE", "ORDER_DETAILS_WRITE",
+    //     "USER_WRITE", "PERMISSION_READ", "ORDER_READ"];
 
 
     function buildUser(payload: JwtPayload) {
@@ -67,10 +67,7 @@ export function AuthProvider({children}:AuthProviderProps){
             logouttt();
         }
 
-        window.addEventListener(
-            "auth:expired",
-            handleAuthExpired
-        )
+        window.addEventListener("auth:expired",handleAuthExpired)
 
         if (token){
             try
@@ -81,7 +78,6 @@ export function AuthProvider({children}:AuthProviderProps){
             if (payload.exp * 1000 > Date.now()) {
                 setUser(buildUser(payload));
             } else logouttt();
-
             
         } catch{
             // clearTokens();
@@ -92,7 +88,6 @@ export function AuthProvider({children}:AuthProviderProps){
 
         setAuthReady(true);     // makes the component re-render 
         // --> user is now !=null and the value will be grabbed by Public/Private Route
-
 
 
         return () => {
